@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FBB55D" >
+<Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="登录"
+    android:textSize="50sp"
+    android:id="@+id/btn"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="注销"
+        android:textSize="50sp"
+        android:id="@+id/btn_logout"/>
+    <com.arstao.gradesystem.UI.widget.EmptyLayout
+        android:id="@+id/error_layout_mine"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="hhhh123231"/></com.arstao.gradesystem.UI.widget.EmptyLayout>
+</LinearLayout>

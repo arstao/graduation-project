@@ -1,0 +1,85 @@
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="#e2e2e2"-->
+    <!--android:orientation="vertical" >-->
+
+    <!--<LinearLayout-->
+        <!--android:id="@+id/menu_item_quests"-->
+        <!--style="@style/MenuItemLayoutStyle" >-->
+
+        <!--&lt;!&ndash;<ImageView&ndash;&gt;-->
+            <!--&lt;!&ndash;style="@style/MenuItemImageViewStyle"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:background="@drawable/drawer_menu_icon_quest_nor"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:contentDescription="@null" />&ndash;&gt;-->
+
+        <!--<TextView-->
+            <!--style="@style/MenuItemTextViewStyle"-->
+            <!--android:gravity="center"-->
+            <!--android:text="@string/menu_quests" />-->
+    <!--</LinearLayout>-->
+
+    <!--<View-->
+        <!--style="@style/h_line" />-->
+
+    <!--<LinearLayout-->
+        <!--android:id="@+id/menu_item_opensoft"-->
+        <!--style="@style/MenuItemLayoutStyle" >-->
+
+        <!--&lt;!&ndash;<ImageView&ndash;&gt;-->
+            <!--&lt;!&ndash;style="@style/MenuItemImageViewStyle"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:background="@drawable/drawer_menu_icon_opensoft_nor"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:contentDescription="@null" />&ndash;&gt;-->
+
+        <!--<TextView-->
+            <!--style="@style/MenuItemTextViewStyle"-->
+            <!--android:text="@string/menu_software" />-->
+    <!--</LinearLayout>-->
+
+    <!--<View-->
+        <!--style="@style/h_line" />-->
+
+    <!--<LinearLayout-->
+        <!--android:id="@+id/menu_item_blog"-->
+        <!--style="@style/MenuItemLayoutStyle" >-->
+
+        <!--&lt;!&ndash;<ImageView&ndash;&gt;-->
+            <!--&lt;!&ndash;style="@style/MenuItemImageViewStyle"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:background="@drawable/drawer_menu_icon_blog_nor"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:contentDescription="@null" />&ndash;&gt;-->
+
+        <!--<TextView-->
+            <!--style="@style/MenuItemTextViewStyle"-->
+            <!--android:text="@string/menu_blog" />-->
+    <!--</LinearLayout>-->
+
+    <!--<View-->
+        <!--style="@style/h_line" />-->
+
+    <!--<LinearLayout-->
+        <!--android:id="@+id/menu_item_gitapp"-->
+        <!--style="@style/MenuItemLayoutStyle" >-->
+
+        <!--&lt;!&ndash;<ImageView&ndash;&gt;-->
+            <!--&lt;!&ndash;style="@style/MenuItemImageViewStyle"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:background="@drawable/drawer_menu_icon_gitapp_nor"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:contentDescription="@null" />&ndash;&gt;-->
+
+        <!--<TextView-->
+            <!--style="@style/MenuItemTextViewStyle"-->
+            <!--android:text="@string/menu_support" />-->
+    <!--</LinearLayout>-->
+
+    <!--<View-->
+        <!--style="@style/h_line" />-->
+
+<!--</LinearLayout>-->
+<ListView
+    android:id="@+id/left_drawer"
+    android:layout_width="240dp"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:choiceMode="singleChoice"
+    android:dividerHeight="1dp"
+    android:background="#ffffff"
+    xmlns:android="http://schemas.android.com/apk/res/android" />
