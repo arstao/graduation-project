@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * Created by arstao on 2016/3/26.
  */
-public abstract class BaseListFragment<T extends Enity> extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener, AbsListView.OnScrollListener {
+public abstract class BaseListFragment<T > extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener, AbsListView.OnScrollListener {
     public static final String BUNDLE_KEY_CATALOG = "BUNDLE_KEY_CATALOG";
     private static final String TAG =BaseListFragment.class.getSimpleName() ;
 
@@ -135,7 +135,6 @@ public abstract class BaseListFragment<T extends Enity> extends BaseFragment imp
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
     }
 
     @Override
@@ -191,15 +190,11 @@ public abstract class BaseListFragment<T extends Enity> extends BaseFragment imp
     }
 
     protected void requestData(boolean refresh) {
-//        String key = getCacheKey();
-        if (isReadCacheData(refresh)) {
-
-            readCacheData();
-        } else {
-            // 取新的数据
-            sendRequestData();
-//        }
+        if(!TDevice.hasInternet()){
+            executeOnLoadDataError();
+            return;
         }
+            sendRequestData();
     }
 
     protected  void readCacheData(){
@@ -301,7 +296,7 @@ public abstract class BaseListFragment<T extends Enity> extends BaseFragment imp
     }
 
     //加载失败后
-    protected void executeOnLoadDataError(String error) {
+    protected void executeOnLoadDataError() {
         //当前为第一页且没有缓存
         if (mCurrentPage == 0
 //                && !CacheManager.isExistDataCache(getActivity(), getCacheKey())
@@ -348,7 +343,7 @@ public abstract class BaseListFragment<T extends Enity> extends BaseFragment imp
         @Override
         public void onResponse(String response) {
 Log.i(TAG,response);
-            executeOnLoadDataSuccess(parseList(response));
+//            executeOnLoadDataSuccess(parseList(response));
         }
     }
 public  class  MyErrorListener implements Response.ErrorListener{
@@ -356,8 +351,8 @@ public  class  MyErrorListener implements Response.ErrorListener{
     @Override
     public void onErrorResponse(VolleyError error) {
         Log.e("TAG", error.getMessage(), error);
-        executeOnLoadDataError(error.toString());
+        executeOnLoadDataError();
     }
 }
-    protected abstract List<T> parseList(String response);
+//    protected abstract List<T> parseList(String response);
 }

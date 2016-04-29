@@ -22,11 +22,32 @@ import static com.arstao.gradesystem.AppConfig.KEY_TWEET_DRAFT;
 
 public class AppContext extends BaseApplication {
 
-    public static final int PAGE_SIZE = 20;// 默认分页大小
+    public static final int PAGE_SIZE = 5;// 默认分页大小
+
+//    private static PreferenceHelper mPreferenceHelper = new PreferenceHelper(getInstance());
+//    public PreferenceHelper getPreferenceHelper(){
+//        return mPreferenceHelper;
+//    }
+
+
 
     private static AppContext instance;
 
     private int loginUid;
+
+    private  int job;
+
+    public int getJob() {
+        return job;
+    }
+
+    public void setJob(int job) {
+        this.job = job;
+    }
+
+    public void setLoginUid(int loginUid) {
+        this.loginUid = loginUid;
+    }
 
     private boolean login;
 
@@ -152,12 +173,14 @@ public class AppContext extends BaseApplication {
         setProperties(new Properties() {
             {
                 setProperty("user.uid", String.valueOf(user.getId()));
-                setProperty("user.name", user.getName());
+                setProperty("user.name", user.getUsername());
 //                setProperty("user.face", user.getPortrait());// 用户头像-文件名
                 setProperty("user.account", user.getAccount());
-                setProperty("user.pwd", CyptoUtils.encode("GS", user.getPwd())
-                );
-                setProperty("user.type",user.getType());
+                setProperty("user.pwd", CyptoUtils.encode("GS", user.getPwd()));
+
+                setProperty("user.job",user.getJob());
+                setProperty("user.sex",user.getSex());
+                setProperty("user.email",user.getEmail());
 //                setProperty("user.location", user.getLocation());
 //                setProperty("user.followers",
 //                        String.valueOf(user.getFollowers()));
@@ -182,6 +205,7 @@ public class AppContext extends BaseApplication {
         setProperties(new Properties() {
             {
                 setProperty("user.name", user.getName());
+
 //                setProperty("user.face", user.getPortrait());// 用户头像-文件名
 //                setProperty("user.followers",
 //                        String.valueOf(user.getFollowers()));
@@ -202,10 +226,13 @@ public class AppContext extends BaseApplication {
     public User getLoginUser() {
         User user = new User();
         user.setId(StringUtils.toInt(getProperty("user.uid"), 0));
-        user.setName(getProperty("user.name"));
+        user.setUsername(getProperty("user.name"));
 //        user.setPortrait(getProperty("user.face"));
         user.setAccount(getProperty("user.account"));
-        user.setType(getProperty("user.type"));
+//        user.setType(getProperty("user.type"));
+        user.setJob(getProperty("user.job"));
+        user.setSex(getProperty("user.sex"));
+        user.setEmail(getProperty("user.email"));
 //        user.setLocation(getProperty("user.location"));
 //        user.setFollowers(StringUtils.toInt(getProperty("user.followers"), 0));
 //        user.setFans(StringUtils.toInt(getProperty("user.fans"), 0));

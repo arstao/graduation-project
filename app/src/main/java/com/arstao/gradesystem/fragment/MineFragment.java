@@ -1,118 +1,123 @@
 package com.arstao.gradesystem.fragment;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.arstao.gradesystem.AppContext;
 import com.arstao.gradesystem.R;
-import com.arstao.gradesystem.UI.widget.EmptyLayout;
-import com.arstao.gradesystem.Util.TDevice;
-import com.arstao.gradesystem.Util.UIHelper;
-import com.arstao.gradesystem.bean.Constants;
+import com.arstao.gradesystem.Util.PreferenceHelper;
+import com.arstao.gradesystem.Volley.JsonRequestToEnity;
+import com.arstao.gradesystem.Volley.VolleyHelper;
+import com.arstao.gradesystem.base.BaseFragment;
+import com.arstao.gradesystem.bean.UserInfo;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by arstao on 2016/2/26.
  */
-public class MineFragment extends Fragment implements View.OnClickListener {
-    private EmptyLayout mErrorLayout;
-    private boolean mIsWatingLogin = false;
+public class MineFragment extends BaseFragment {
+
+    private TextView tv_username;
+    private TextView tv_job;
+    private TextView tv_sex;
+    private TextView tv_email;
+    private PreferenceHelper helper;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        IntentFilter filter = new IntentFilter(Constants.INTENT_ACTION_LOGOUT);
-        filter.addAction(Constants.INTENT_ACTION_USER_CHANGE);
-        getActivity().registerReceiver(mReceiver, filter);
+    protected int getLayoutId() {
+        return R.layout.fragment_mine_information;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_mine, null);
+        View view = inflater.inflate(getLayoutId(), container, false);
+        return view;
     }
-
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        view.findViewById(R.id.btn).setOnClickListener(this);
-        view.findViewById(R.id.btn_logout).setOnClickListener(this);
-        Button btn = (Button) view.findViewById(R.id.btn);
-        mErrorLayout = (EmptyLayout) view.findViewById(R.id.error_layout_mine);
+        initView(view);
+        helper = new PreferenceHelper(getActivity());
+
+
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn:
-                UIHelper.showLoginActivity(getActivity());
-                break;
-            case R.id.btn_logout:
-                AppContext.getInstance().Logout();
-                break;
+    public void onStart() {
+        if(!helper.getValue("user-id","0").equals("0")){
+            getLocalData();
+        }else {
+            requestData();
         }
+        super.onStart();
     }
 
-    private void requestData(boolean refresh) {
-        if (AppContext.getInstance().isLogin()) {
-            mIsWatingLogin = false;
-//            String key = getCacheKey();
-            if (refresh || TDevice.hasInternet()) {
-//                    && (!CacheManager.isExistDataCache(getActivity(), key))) {
-//                sendRequestData();
-            }
-//            else {
-//                readCacheData(key);
-//            }
-        } else {
-            mIsWatingLogin = true;
-        }
-        steupUser();
+    private void getLocalData() {
+        tv_email.setText(helper.getValue("user-email"));
+        tv_job.setText(helper.getValue("user-job"));
+        tv_username.setText(helper.getValue("user-name"));
+        tv_sex.setText(helper.getValue("user-sex"));
     }
 
+    private void requestData() {
+        String url = "http://101.201.72.189/p1/testfinal/json/get_user_mess.php";
+        Map<String, Integer> jsonParam = new HashMap<String, Integer>();
+        jsonParam.put("id", AppContext.getInstance().getLoginUid());
+        jsonParam.put("job", AppContext.getInstance().getJob());
+        JSONObject jsonObject = new JSONObject(jsonParam);
+        JsonRequestToEnity<UserInfo> matchRequest = new JsonRequestToEnity<UserInfo>(Request.Method.POST, url, jsonObject, UserInfo.class, new Response.Listener<UserInfo>() {
 
-    private void steupUser() {
-        if (mIsWatingLogin) {
-            mErrorLayout.setVisibility(View.VISIBLE);
-//            mUserContainer.setVisibility(View.GONE);
-//            mUserUnLogin.setVisibility(View.VISIBLE);
-        } else {
-            mErrorLayout.setVisibility(View.GONE);
-//            mUserContainer.setVisibility(View.VISIBLE);
-//            mUserUnLogin.setVisibility(View.GONE);
-        }
-    }
+            @Override
+            public void onResponse(UserInfo info) {
+                if(info.getCode()>0){
+//                    executeOnLoadDataSuccess(matchBean.getData());
+                tv_email.setText(info.getData().getJemail());
+                    String job =null;
+                    if(AppContext.getInstance().getJob()==0)
+                        job="裁判";
+                    else
+                        job="选手";
+                    tv_job.setText(job);
+                    tv_username.setText(info.getData().getUsername());
+                    tv_sex.setText(info.getData().getSex());
 
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (action.equals(Constants.INTENT_ACTION_LOGOUT)) {
-                if (mErrorLayout != null) {
-                    mIsWatingLogin = true;
-                    steupUser();
-//                    mMesCount.hide();
+                    helper.setValue("user-id",String.valueOf(AppContext.getInstance().getLoginUid()));
+                    helper.setValue("user-job",job);
+                    helper.setValue("user-email",info.getData().getJemail());
+                    helper.setValue("user-name",info.getData().getUsername());
+                    helper.setValue("user-sex",info.getData().getSex());
                 }
-            } else if (action.equals(Constants.INTENT_ACTION_USER_CHANGE)) {
-                requestData(true);
-            } else if (action.equals(Constants.INTENT_ACTION_NOTICE)) {
-//                setNotice();
             }
-        }
-    };
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                AppContext.showToast(R.string.tip_request_fail);
+            }
+        });
+        VolleyHelper.getInstance().add(matchRequest);
+
+    }
+
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        getActivity().unregisterReceiver(mReceiver);
+    public void initView(View view) {
+        view.findViewById(R.id.doctor_icon);
+        tv_username = (TextView) view.findViewById(R.id.tv_username);
+        tv_job = (TextView) view.findViewById(R.id.tv_job);
+        tv_sex = (TextView) view.findViewById(R.id.tv_sex);
+        tv_email = (TextView) view.findViewById(R.id.tv_email);
     }
+
+
 }

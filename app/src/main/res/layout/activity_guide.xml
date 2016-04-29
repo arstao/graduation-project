@@ -51,14 +51,14 @@
             <Button
                 android:id="@+id/btn_tologin"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:layout_weight="1"
+                style="@style/button_common_blue"
                 android:text="登录" />
 
             <Button
                 android:id="@+id/btn_toregister"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                style="@style/button_common_blue"
                 android:layout_weight="1"
                 android:text="注册" />
         </LinearLayout>

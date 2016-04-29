@@ -7,7 +7,8 @@
     <string name="menu_software">软件</string>
     <string name="menu_blog">博客</string>
     <string name="menu_support">支持</string>
-
+    <string name="menu_setting">设置</string>
+    <string name="menu_about">关于我们</string>
     <string name="error_view_loading">加载中...</string>
     <string name="error_view_load_error_click_to_refresh">加载失败，点击刷新...</string>
     <string name="error_view_network_error_click_to_refresh">网络错误，点击刷新...</string>
@@ -16,9 +17,9 @@
     <string name="loading_no_more">没有更多数据了</string>
 
 
-    <string name="pagertab_1">111</string>
-    <string name="pagertab_2">222</string>
-    <string name="pagertab_3">333</string>
+    <string name="pagertab_1">全部比赛</string>
+    <string name="pagertab_2">竞技类</string>
+    <string name="pagertab_3">观赏类</string>
     <string name="pagertab_4">444</string>
 
     <string name="loading">正在准备。。。</string>
@@ -29,4 +30,5 @@
     <string name="tip_register_success">注册成功</string>
     <string name="tip_register_fail">注册失败</string>
     <string name="tip_login_fail">登录失败</string>
+    <string name="tip_request_fail">请求数据失败</string>
 </resources>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:background="@color/graywhite" />
+    <RelativeLayout
+
+        android:id="@+id/rl_xiugaimima"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/bg_center_selector"
+android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+         >
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:background="@drawable/list_line" >
+        </View>
+
+        <TextView
+            style="@style/user_tv"
+            android:layout_toRightOf="@+id/iv_xiugaimima"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingRight="10dp"
+            android:text="修改密码" />
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/iv_xiugaimima"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/ic_xiugaimima"
+            android:layout_centerVertical="true"/>
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_right_arraw"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:background="@color/graywhite" />
+    <Button
+        android:id="@+id/btn_loginout"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:text="退出登录"
+        android:textColor="@color/red"
+        android:textSize="18sp" />
+
+</LinearLayout>

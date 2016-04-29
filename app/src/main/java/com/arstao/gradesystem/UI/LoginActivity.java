@@ -121,26 +121,25 @@ public class LoginActivity extends BaseActivity {
         jsonParam.put("username", mUserName);
         jsonParam.put("password", mPassword);
         jsonParam.put("job", job);
-        jsonParam.put("sex",sex);
-        jsonParam.put("name",et_name.getText().toString());
-        jsonParam.put("email",et_email.getText().toString());
+        jsonParam.put("sex", sex);
+        jsonParam.put("name", et_name.getText().toString());
+        jsonParam.put("email", et_email.getText().toString());
         JSONObject jsonObject = new JSONObject(jsonParam);
-        JsonRequestToEnity<UserRegister> registerRequest = new JsonRequestToEnity<UserRegister>(Method.POST, url,jsonObject ,UserRegister.class, new Response.Listener<UserRegister>() {
+        JsonRequestToEnity<UserRegister> registerRequest = new JsonRequestToEnity<UserRegister>(Method.POST, url, jsonObject, UserRegister.class, new Response.Listener<UserRegister>() {
 
 
             @Override
             public void onResponse(UserRegister user) {
-                if(user.getCode()>0){
+                if (user.getCode() > 0) {
 //                    User user = new User();
 //                    user.setId(user.);
 //                    user.setName("tao");
 //                    user.setAccount(mUserName);
 //                    user.setPwd(mPassword);
 //                    AppContext.getInstance().saveUserInfo(user);
-AppContext.showToast(R.string.tip_register_success);
-                   finish();
-                }
-                else{
+                    AppContext.showToast(R.string.tip_register_success);
+                    finish();
+                } else {
                     AppContext.showToast(R.string.tip_register_fail);
                 }
 
@@ -153,7 +152,7 @@ AppContext.showToast(R.string.tip_register_success);
         });
         VolleyHelper.getInstance().add(registerRequest);
     }
-
+   String theJob ;
     private void handleLogin() {
         ///登录前检查
         if (prepare()) {
@@ -168,21 +167,23 @@ AppContext.showToast(R.string.tip_register_success);
         } else {
             job = "1";
         }
-
+        theJob =job;
 
         String url = "  http://101.201.72.189/p1/testfinal/json/dologin.php";
 
         Map<String, String> jsonParam = new HashMap<String, String>();
         jsonParam.put("username", mUserName);
-        jsonParam.put("password",mPassword);
+        jsonParam.put("password", mPassword);
         jsonParam.put("job", job);
         JSONObject jsonObject = new JSONObject(jsonParam);
-        JsonRequestToEnity<User> userRequest = new JsonRequestToEnity<User>(Method.POST, url,jsonObject ,User.class, new Response.Listener<User>() {
+        JsonRequestToEnity<User> userRequest = new JsonRequestToEnity<User>(Method.POST, url, jsonObject, User.class, new Response.Listener<User>() {
 
 
             @Override
             public void onResponse(User user) {
-                if(user.getCode()>0){
+                if (user.getCode() > 0) {
+                    AppContext.getInstance().setLoginUid(Integer.valueOf(user.getData().getId()));
+                    AppContext.getInstance().setJob(Integer.valueOf(theJob));
 //                    User user = new User();
 //                    user.setId(user.);
 //                    user.setName("tao");
@@ -191,8 +192,8 @@ AppContext.showToast(R.string.tip_register_success);
 //                    AppContext.getInstance().saveUserInfo(user);
 
                     handleLoginSuccess();
-                }
-                else{
+                } else {
+                    AppContext.showToast(R.string.tip_login_fail);
                     AppContext.getInstance().cleanLoginInfo();
                 }
 

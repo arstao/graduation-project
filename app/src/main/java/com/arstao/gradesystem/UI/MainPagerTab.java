@@ -2,31 +2,21 @@ package com.arstao.gradesystem.UI;
 
 import com.arstao.gradesystem.R;
 import com.arstao.gradesystem.fragment.PagerTab;
-import com.arstao.gradesystem.fragment.PagerTab1;
-import com.arstao.gradesystem.fragment.PagerTab2;
-import com.arstao.gradesystem.fragment.PagerTab3;
 
 /**
  * Created by arstao on 2016/3/19.
  */
 public enum MainPagerTab {
-    NEWS(0, R.string.pagertab_1,
-         PagerTab.class),
-    MAIN(1,R.string.pagertab_2,PagerTab1.class),
-    MAI(1,R.string.pagertab_3,PagerTab2.class),
-    MAN(1,R.string.pagertab_4,PagerTab3.class);
-//
-//	TWEET(img1, R.string.main_tab_name_tweet, R.drawable.tab_icon_tweet,
-//			TweetsViewPagerFragment.class),
-//
-//	QUICK(2, R.string.main_tab_name_quick, R.drawable.tab_icon_new,
-//			null),
-//
-//	EXPLORE(3, R.string.main_tab_name_explore, R.drawable.tab_icon_explore,
-//			ExploreFragment.class),
-//
-//	ME(4, R.string.main_tab_name_my, R.drawable.tab_icon_me,
-//			MyInformationFragment.class);
+    ALL(0, R.string.pagertab_1
+            , PagerTab.class),
+    COMPETITIVE(1,R.string.pagertab_2,PagerTab.class),
+    ENJOY(1,R.string.pagertab_3,PagerTab.class);
+//    ALL(0, R.string.pagertab_1
+//            ,
+//         PagerTab1.class),
+//    COMPETITIVE(1,R.string.pagertab_2,PagerTab2.class),
+//    ENJOY(1,R.string.pagertab_3,PagerTab3.class);
+//    MAN(1,R.string.pagertab_4,PagerTab.class);
 
     private int idx;
     private int resName;

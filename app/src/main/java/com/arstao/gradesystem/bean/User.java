@@ -1,14 +1,50 @@
 package com.arstao.gradesystem.bean;
 
-import com.arstao.gradesystem.base.Enity;
+import com.arstao.gradesystem.base.BaseEnity;
 
 /**
  * Created by arstao on 2016/3/20.
  */
-public class User extends Enity {
+public class User extends BaseEnity {
     private String account;
     private String pwd;
 private String type;
+private String job;
+    private String email;
+    private String sex;
+    private String username;
+
+    public String getJob() {
+        return job;
+    }
+
+    public void setJob(String job) {
+        this.job = job;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     private Data data;
 

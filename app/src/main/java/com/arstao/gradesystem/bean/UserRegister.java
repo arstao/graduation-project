@@ -1,13 +1,13 @@
 package com.arstao.gradesystem.bean;
 
-import com.arstao.gradesystem.base.Enity;
+import com.arstao.gradesystem.base.BaseEnity;
 
 import java.util.List;
 
 /**
  * Created by arstao on 2016/3/20.
  */
-public class UserRegister extends Enity {
+public class UserRegister extends BaseEnity {
     private String account;
     private String pwd;
 private String type;

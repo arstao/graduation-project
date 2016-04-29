@@ -18,7 +18,7 @@ import com.arstao.gradesystem.Util.TDevice;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListBaseAdapter<T extends Enity> extends BaseAdapter {
+public class ListBaseAdapter<T> extends BaseAdapter {
     public static final int STATE_EMPTY_ITEM = 0;
     public static final int STATE_LOAD_MORE = 1;
     public static final int STATE_NO_MORE = 2;

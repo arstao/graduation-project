@@ -1,15 +1,16 @@
 package com.arstao.gradesystem.bean;
 
 import com.arstao.gradesystem.R;
-import com.arstao.gradesystem.fragment.QuestsFragment;
+import com.arstao.gradesystem.fragment.AboutFragment;
+import com.arstao.gradesystem.fragment.SettingFragment;
 
 /**
  * Created by arstao on 2016/2/24.
  */
 public enum SimpleBackPage {
 
-    QUESTS(1, R.string.menu_quests, QuestsFragment.class);
-
+    SETTING(1, R.string.menu_setting, SettingFragment.class),
+    ABOUT(2, R.string.menu_about, AboutFragment.class);
 
 
     private int title;

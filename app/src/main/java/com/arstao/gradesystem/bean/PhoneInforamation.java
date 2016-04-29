@@ -1,11 +1,11 @@
 package com.arstao.gradesystem.bean;
 
-import com.arstao.gradesystem.base.Enity;
+import com.arstao.gradesystem.base.BaseEnity;
 
 /**
  * Created by arstao on 2016/3/26.
  */
-public class PhoneInforamation extends Enity {
+public class PhoneInforamation extends BaseEnity {
 private String province;
     private  String castName;
     private String telString;

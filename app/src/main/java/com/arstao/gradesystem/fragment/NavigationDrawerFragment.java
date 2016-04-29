@@ -22,7 +22,7 @@ import com.arstao.gradesystem.Util.UIHelper;
  * Created by arstao on 2016/2/24.
  */
 public class NavigationDrawerFragment extends BaseFragment {
-    private String[] mPlanetTitles={"s","ss","sss","sssaa"}; // listView的每一个item的名字
+    private String[] mPlanetTitles={"设置","关于我们"}; // listView的每一个item的名字
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle; // 用来监听DrawerLayout事件
@@ -67,7 +67,12 @@ public class NavigationDrawerFragment extends BaseFragment {
 //            FragmentManager fragmentManager = getFragmentManager();
 //            fragmentManager.beginTransaction()
 //                    .replace(R.id.realtabcontent, fragment).commit();
-            UIHelper.showSimpleBack(getActivity(), SimpleBackPage.QUESTS);
+            if ((position==0)) {
+                UIHelper.showSimpleBack(getActivity(), SimpleBackPage.SETTING);
+            }else if(position==1){
+                UIHelper.showSimpleBack(getActivity(), SimpleBackPage.ABOUT);
+            }
+
             mDrawerList.setItemChecked(position, true);
             // 给操作栏设置标题
 //            getActionBar().setTitle(mPlanetTitles[position]);

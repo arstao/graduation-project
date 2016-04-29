@@ -1,50 +1,100 @@
 package com.arstao.gradesystem.fragment;
 
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.arstao.gradesystem.AppContext;
+import com.arstao.gradesystem.R;
+import com.arstao.gradesystem.Volley.JsonRequestToEnity;
 import com.arstao.gradesystem.adapter.PagerTabAdapter;
 import com.arstao.gradesystem.base.BaseListFragment;
 import com.arstao.gradesystem.base.ListBaseAdapter;
-import com.arstao.gradesystem.bean.PhoneInforamation;
+import com.arstao.gradesystem.bean.MatchBean;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 
-public class PagerTab extends BaseListFragment<PhoneInforamation>{
-    private TabLayout mTablyout;
-    private ViewPager mViewPager;
+public class PagerTab extends BaseListFragment<MatchBean.Data>{
 
     @Override
-    protected ListBaseAdapter<PhoneInforamation> getListAdapter() {
+    protected ListBaseAdapter<MatchBean.Data> getListAdapter() {
         return new PagerTabAdapter();
     }
-
+protected int getKind(){
+    Bundle bundle = getArguments();
+    int kind =0;
+    if(bundle!=null) {
+        kind =bundle.getInt("Argument");
+    }
+    return kind;
+}
     @Override
     protected void sendRequestData() {
-//        RequestQueue mQueue = Volley.newRequestQueue(getContext());
 
-        MyStringRequest stringRequest = new MyStringRequest("http://www.baidu.com",
-                new MyResponseListener(),new MyErrorListener());
-        stringRequest.setShouldCache(true);
-        mQueue.add(stringRequest);
+//         sendLocalData();
+        String url = "http://101.201.72.189/p1/testfinal/json/get_home_page.php";
+
+            Map<String, Integer> jsonParam = new HashMap<String, Integer>();
+            jsonParam.put("num", 6);
+            jsonParam.put("kind", getKind());
+        jsonParam.put("page",mCurrentPage+1);
+            JSONObject jsonObject = new JSONObject(jsonParam);
+            JsonRequestToEnity<MatchBean> matchRequest = new JsonRequestToEnity<MatchBean>(Request.Method.POST, url, jsonObject, MatchBean.class, new Response.Listener<MatchBean>() {
+
+                @Override
+                public void onResponse(MatchBean matchBean) {
+                    if(matchBean.getCode()>0){
+                        executeOnLoadDataSuccess(matchBean.getData());
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    AppContext.showToast(R.string.tip_request_fail);
+                }
+        });
+        mQueue.add(matchRequest);
     }
 
-    @Override
-    protected List<PhoneInforamation> parseList(String response) {
-        PhoneInforamation p = new PhoneInforamation();
+    private void sendLocalData() {
+        MatchBean.Data p = new MatchBean.Data();
         Random random = new Random();
-
-        p.setCastName( String.valueOf(random.nextInt())   );
-        p.setProvince(String.valueOf(random.nextInt()) );
-        p.setTelString(String.valueOf(random.nextInt()) );
-
-        List data = new ArrayList<PhoneInforamation>();
+        p.setCname( String.valueOf(random.nextInt())   );
+        p.setEdate(String.valueOf(random.nextInt()) );
+        p.setEplace(String.valueOf(random.nextInt()) );
+        p.setEshow(String.valueOf(random.nextInt()));
+        p.setEname(String.valueOf(random.nextInt()));
+        List<MatchBean.Data> data = new ArrayList<MatchBean.Data>();
         for(int i =0;i<10;i++){
             data.add(p);
         }
-        return data;
+        executeOnLoadDataSuccess(data);
+    }
+
+    public static Fragment newInstance(int num) {
+        PagerTab f =new PagerTab();
+
+
+
+        // Supply num input as an argument.
+
+        Bundle args =new Bundle();
+
+        args.putInt("Argument", num);
+
+        f.setArguments(args);
+
+
+
+        return f;
     }
 }
