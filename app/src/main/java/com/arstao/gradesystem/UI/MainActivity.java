@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.arstao.gradesystem.AppManager;
 import com.arstao.gradesystem.R;
+import com.arstao.gradesystem.Util.PreferenceHelper;
 import com.arstao.gradesystem.fragment.NavigationDrawerFragment;
 
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener,TabHost.OnTabChangeListener {
@@ -51,20 +52,25 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
         MainTab[] tabs = MainTab.values();
         final int size = tabs.length;
+//        PreferenceHelper helper = new PreferenceHelper(MainActivity.this);
+        PreferenceHelper helper=PreferenceHelper.getInstance();
+
+        boolean isPlayer = helper.getValue("user-job").equals("选手");
         for (int i = 0; i < size; i++) {
             MainTab mainTab = tabs[i];
+            if(mainTab.getResName()==R.string.tab_grade&&isPlayer){
+                continue;
+            }
             TabHost.TabSpec tab = mTabHost.newTabSpec(getString(mainTab.getResName()));
             tab.setIndicator(getTabItemView(mainTab));
-
             tab.setContent(new TabHost.TabContentFactory() {
-
                 @Override
                 public View createTabContent(String tag) {
                     return new View(MainActivity.this);
                 }
             });
             mTabHost.addTab(tab, mainTab.getClz(), null);
-            mTabHost.getTabWidget().getChildAt(i).setOnTouchListener(MainActivity.this);
+//            mTabHost.getTabWidget().getChildAt(i).setOnTouchListener(MainActivity.this);
         }
     }
 

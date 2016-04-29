@@ -3,6 +3,8 @@ package com.arstao.gradesystem.Util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.arstao.gradesystem.AppContext;
+
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -16,8 +18,11 @@ import java.util.Set;
  * 修改备注：
  */
 public class PreferenceHelper {
-
-        public static String mSetting = "nysetting";
+ private static final PreferenceHelper instance = new PreferenceHelper(AppContext.getInstance());
+    public static PreferenceHelper getInstance(){
+        return instance;
+    }
+        public static final String mSetting = "setting";
         SharedPreferences mPreferences;
 
         SharedPreferences.Editor mEditor;
@@ -29,7 +34,7 @@ public class PreferenceHelper {
         public static final String LONGITUDE = "longitude";
         public static final String LATITUDE = "latitude";
 
-        public PreferenceHelper(Context c) {
+        private PreferenceHelper(Context c) {
             context = c;
             mPreferences = context.getSharedPreferences(mSetting, 0);
             mEditor = mPreferences.edit();

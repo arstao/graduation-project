@@ -3,13 +3,14 @@ package com.arstao.gradesystem.UI;
 
 import com.arstao.gradesystem.R;
 import com.arstao.gradesystem.fragment.MineFragment;
-import com.arstao.gradesystem.fragment.QuestsFragment;
+import com.arstao.gradesystem.fragment.ScanFragment;
 
 public enum MainTab {
 
-	NEWS(0, R.string.menu_quests, R.drawable.alien,
-			QuestsFragment.class),
-	MAIN(1,R.string.menu_mine,R.drawable.alien,MineFragment.class);
+	SCAN(0, R.string.tab_scan, R.drawable.alien,ScanFragment.class),
+	GRADE(1, R.string.tab_grade, R.drawable.alien,ScanFragment.class),
+	MESSAGE(2, R.string.tab_message, R.drawable.alien,ScanFragment.class),
+	MINE(3,R.string.tab_mine,R.drawable.alien,MineFragment.class);
 //
 //	TWEET(img1, R.string.main_tab_name_tweet, R.drawable.tab_icon_tweet,
 //			TweetsViewPagerFragment.class),

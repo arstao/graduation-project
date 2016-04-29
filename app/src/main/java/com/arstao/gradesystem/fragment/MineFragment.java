@@ -48,8 +48,8 @@ public class MineFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView(view);
-        helper = new PreferenceHelper(getActivity());
-
+//        helper = new PreferenceHelper(getActivity());
+        helper=PreferenceHelper.getInstance();
 
     }
 
@@ -73,27 +73,24 @@ public class MineFragment extends BaseFragment {
     private void requestData() {
         String url = "http://101.201.72.189/p1/testfinal/json/get_user_mess.php";
         Map<String, Integer> jsonParam = new HashMap<String, Integer>();
-        jsonParam.put("id", AppContext.getInstance().getLoginUid());
-        jsonParam.put("job", AppContext.getInstance().getJob());
+        int job = 0;
+        if(helper.getValue("user-job").equals("选手")){
+            job =1;
+        }
+        String id =helper.getValue("user-id");
+        jsonParam.put("id", Integer.valueOf(helper.getValue("user-id")));
+        jsonParam.put("job", job);
         JSONObject jsonObject = new JSONObject(jsonParam);
         JsonRequestToEnity<UserInfo> matchRequest = new JsonRequestToEnity<UserInfo>(Request.Method.POST, url, jsonObject, UserInfo.class, new Response.Listener<UserInfo>() {
 
             @Override
             public void onResponse(UserInfo info) {
                 if(info.getCode()>0){
-//                    executeOnLoadDataSuccess(matchBean.getData());
                 tv_email.setText(info.getData().getJemail());
-                    String job =null;
-                    if(AppContext.getInstance().getJob()==0)
-                        job="裁判";
-                    else
-                        job="选手";
-                    tv_job.setText(job);
+                    tv_job.setText(helper.getValue("user-job"));
                     tv_username.setText(info.getData().getUsername());
                     tv_sex.setText(info.getData().getSex());
 
-                    helper.setValue("user-id",String.valueOf(AppContext.getInstance().getLoginUid()));
-                    helper.setValue("user-job",job);
                     helper.setValue("user-email",info.getData().getJemail());
                     helper.setValue("user-name",info.getData().getUsername());
                     helper.setValue("user-sex",info.getData().getSex());

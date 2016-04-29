@@ -18,23 +18,28 @@ import com.arstao.gradesystem.base.BaseFragment;
  * 修改时间：2016/4/29 9:17
  * 修改备注：
  */
-public class SettingFragment extends BaseFragment{
+public class SettingFragment extends BaseFragment {
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_setting;
     }
-   private PreferenceHelper helper;
+
+    private PreferenceHelper helper;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(getLayoutId(), container, false);
         return view;
     }
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView(view);
-        helper = new PreferenceHelper(getActivity());
+//        helper = new PreferenceHelper(getActivity());
+        helper=PreferenceHelper.getInstance();
+
 //
 //        if(!helper.getValue("user-id","0").equals("0")){
 //            getLocalData();
@@ -45,12 +50,12 @@ public class SettingFragment extends BaseFragment{
 
     @Override
     public void initView(View view) {
-view.findViewById(R.id.btn_loginout).setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-helper.removeAll();
-        AppManager.getAppManager().finishAllActivity();
-    }
-});
+        view.findViewById(R.id.btn_loginout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                helper.removeAll();
+                AppManager.getAppManager().finishAllActivity();
+            }
+        });
     }
 }

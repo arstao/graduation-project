@@ -14,6 +14,7 @@ import com.android.volley.VolleyError;
 import com.arstao.gradesystem.AppContext;
 import com.arstao.gradesystem.R;
 import com.arstao.gradesystem.Util.CyptoUtils;
+import com.arstao.gradesystem.Util.PreferenceHelper;
 import com.arstao.gradesystem.Util.TDevice;
 import com.arstao.gradesystem.Volley.JsonRequestToEnity;
 import com.arstao.gradesystem.Volley.VolleyHelper;
@@ -164,12 +165,14 @@ public class LoginActivity extends BaseActivity {
         String sex = null;
         if (rb_judge.isChecked()) {
             job = "0";
+            theJob="裁判";
         } else {
             job = "1";
+            theJob="选手";
         }
-        theJob =job;
 
-        String url = "  http://101.201.72.189/p1/testfinal/json/dologin.php";
+
+        final String url = "  http://101.201.72.189/p1/testfinal/json/dologin.php";
 
         Map<String, String> jsonParam = new HashMap<String, String>();
         jsonParam.put("username", mUserName);
@@ -182,15 +185,8 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onResponse(User user) {
                 if (user.getCode() > 0) {
-                    AppContext.getInstance().setLoginUid(Integer.valueOf(user.getData().getId()));
-                    AppContext.getInstance().setJob(Integer.valueOf(theJob));
-//                    User user = new User();
-//                    user.setId(user.);
-//                    user.setName("tao");
-//                    user.setAccount(mUserName);
-//                    user.setPwd(mPassword);
-//                    AppContext.getInstance().saveUserInfo(user);
-
+                    PreferenceHelper.getInstance().setValue("user-id",String.valueOf(user.getData().getId()));
+                    PreferenceHelper.getInstance().setValue("user-job",theJob);
                     handleLoginSuccess();
                 } else {
                     AppContext.showToast(R.string.tip_login_fail);
@@ -213,6 +209,7 @@ public class LoginActivity extends BaseActivity {
         data.putExtra(BUNDLE_KEY_REQUEST_CODE, requestCode);
         setResult(RESULT_OK, data);
         this.sendBroadcast(new Intent(Constants.INTENT_ACTION_USER_CHANGE));
+
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
     }
 

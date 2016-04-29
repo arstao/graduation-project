@@ -10,7 +10,7 @@ public enum MainPagerTab {
     ALL(0, R.string.pagertab_1
             , PagerTab.class),
     COMPETITIVE(1,R.string.pagertab_2,PagerTab.class),
-    ENJOY(1,R.string.pagertab_3,PagerTab.class);
+    ENJOY(2,R.string.pagertab_3,PagerTab.class);
 //    ALL(0, R.string.pagertab_1
 //            ,
 //         PagerTab1.class),
