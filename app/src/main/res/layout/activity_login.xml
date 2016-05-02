@@ -92,8 +92,31 @@
             style="@style/button_common_blue"
             android:layout_marginTop="20dp"
             android:text="@string/login" />
-
-
+        <Button
+            android:id="@+id/btn_test1"
+            style="@style/button_common_blue"
+            android:layout_marginTop="20dp"
+            android:text="test个人信息" />
+        <Button
+            android:id="@+id/btn_test2"
+            style="@style/button_common_blue"
+            android:layout_marginTop="20dp"
+            android:text="test评分上传" />
+        <Button
+            android:id="@+id/btn_test3"
+            style="@style/button_common_blue"
+            android:layout_marginTop="20dp"
+            android:text="test获取成绩" />
+        <Button
+            android:id="@+id/btn_test4"
+            style="@style/button_common_blue"
+            android:layout_marginTop="20dp"
+            android:text="test报名" />
+        <Button
+            android:id="@+id/btn_test5"
+            style="@style/button_common_blue"
+            android:layout_marginTop="20dp"
+            android:text="test项目中选手信息" />
 
     </LinearLayout>
 

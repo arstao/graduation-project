@@ -36,6 +36,8 @@ private Class<T> mClazz;
     protected Response<T> parseNetworkResponse(NetworkResponse response) {
         try {
             String je = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
+//            String substring = je.substring(4);
+//            UserInfo userInfo = (UserInfo) new Gson().fromJson(substring, mClazz);
             return Response.success(new Gson().fromJson(je, mClazz), HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException var3) {
             return Response.error(new ParseError(var3));
