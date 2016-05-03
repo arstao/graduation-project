@@ -3,6 +3,7 @@ package com.arstao.gradesystem.Volley;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonRequest;
 import com.google.gson.Gson;
@@ -36,7 +37,11 @@ private Class<T> mClazz;
     protected Response<T> parseNetworkResponse(NetworkResponse response) {
         try {
             String je = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
-            return Response.success(new Gson().fromJson(je, mClazz), HttpHeaderParser.parseCacheHeaders(response));
+           T result = new Gson().fromJson(je,mClazz);
+            if (result==null){
+                return Response.error(new VolleyError());
+            }
+            return Response.success(result, HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException var3) {
             return Response.error(new ParseError(var3));
         }

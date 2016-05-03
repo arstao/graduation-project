@@ -2,6 +2,7 @@ package com.arstao.gradesystem.bean;
 
 import com.arstao.gradesystem.R;
 import com.arstao.gradesystem.fragment.AboutFragment;
+import com.arstao.gradesystem.fragment.GradeDetailFragment;
 import com.arstao.gradesystem.fragment.SettingFragment;
 
 /**
@@ -10,8 +11,8 @@ import com.arstao.gradesystem.fragment.SettingFragment;
 public enum SimpleBackPage {
 
     SETTING(1, R.string.menu_setting, SettingFragment.class),
-    ABOUT(2, R.string.menu_about, AboutFragment.class);
-
+    ABOUT(2, R.string.menu_about, AboutFragment.class),
+    GRADE_DETAIL(3,R.string.grade_detail, GradeDetailFragment.class);
 
     private int title;
     private Class<?> clz;

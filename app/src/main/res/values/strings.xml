@@ -4,7 +4,7 @@
 
     <string name="tab_scan">查看</string>
     <string name="tab_grade">评分</string>
-    <string name="tab_message">消息</string>
+    <string name="tab_sign_up">报名</string>
     <string name="tab_mine">我的</string>
     <string name="menu_setting">设置</string>
     <string name="menu_about">关于我们</string>
@@ -30,4 +30,11 @@
     <string name="tip_register_fail">注册失败</string>
     <string name="tip_login_fail">登录失败</string>
     <string name="tip_request_fail">请求数据失败</string>
+    <string name="tip_sign_up_success">报名成功</string>
+    <string name="tip_sign_up_fail">报名失败</string>
+    <string name="sign_up_dialog_content">确定要报名吗？</string>
+
+    <string name="hint_score">打分</string>
+    <string name="hint_score_time">计分： 00:01:07</string>
+    <string name="grade_detail">评分详情</string>
 </resources>

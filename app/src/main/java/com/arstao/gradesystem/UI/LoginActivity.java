@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.android.volley.Request;
 import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -21,8 +22,11 @@ import com.arstao.gradesystem.Volley.VolleyHelper;
 import com.arstao.gradesystem.base.BaseActivity;
 import com.arstao.gradesystem.bean.Constants;
 import com.arstao.gradesystem.bean.User;
+import com.arstao.gradesystem.bean.UserInfo;
 import com.arstao.gradesystem.bean.UserRegister;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -96,6 +100,188 @@ public class LoginActivity extends BaseActivity {
                 }
             }
         });
+          findViewById(R.id.btn_test1).setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  test1();
+              }
+          });
+        findViewById(R.id.btn_test2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                test2();
+            }
+        });
+        findViewById(R.id.btn_test3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                test3();
+            }
+        });
+        findViewById(R.id.btn_test4).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                testSignUp();
+            }
+        });
+        findViewById(R.id.btn_test5).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                testGetPlayerInfoFromItem();
+            }
+        });
+    }
+
+    private void testGetPlayerInfoFromItem() {
+        String url = "http://101.201.72.189/p1/testfinal/json/get_player_eve.php";
+        Map<String, String> jsonParam = new HashMap<String, String>();
+        jsonParam.put("ename", "男子400M");
+        jsonParam.put("num", "2");
+        jsonParam.put("page", "2");
+        JSONObject jsonObject = new JSONObject(jsonParam);
+        JsonRequestToEnity<UserInfo> matchRequest = new JsonRequestToEnity<UserInfo>(Request.Method.POST, url, jsonObject, UserInfo.class, new Response.Listener<UserInfo>() {
+
+            @Override
+            public void onResponse(UserInfo info) {
+                if(info.getCode()>0){
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                AppContext.showToast(R.string.tip_request_fail);
+            }
+        });
+        VolleyHelper.getInstance().add(matchRequest);
+    }
+
+    private void testSignUp() {
+        String url = "http://101.201.72.189/p1/testfinal/json/book_applied.php";
+        Map<String, String> jsonParam = new HashMap<String, String>();
+        jsonParam.put("username", "aaa");
+        jsonParam.put("name", "扣的");
+        jsonParam.put("ename", "跳水");
+        jsonParam.put("job", "1");
+        JSONObject jsonObject = new JSONObject(jsonParam);
+        JsonRequestToEnity<UserInfo> matchRequest = new JsonRequestToEnity<UserInfo>(Request.Method.POST, url, jsonObject, UserInfo.class, new Response.Listener<UserInfo>() {
+
+            @Override
+            public void onResponse(UserInfo info) {
+                if(info.getCode()>0){
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                AppContext.showToast(R.string.tip_request_fail);
+            }
+        });
+        VolleyHelper.getInstance().add(matchRequest);
+    }
+
+    private void test3() {
+        String url = "http://101.201.72.189/p1/testfinal/json/getscore.php";
+        Map<String, String> jsonParam = new HashMap<String, String>();
+//        {
+//            jsonParam.put("kind", "0");
+//            jsonParam.put("page", "3");
+//            jsonParam.put("num", "3");
+//            jsonParam.put("username", "12");
+//            jsonParam.put("ename", "12");
+//        }
+//        {
+//            jsonParam.put("kind", "1");
+//            jsonParam.put("page", "1");
+//            jsonParam.put("num", "3");
+//            jsonParam.put("username", "t11");
+//            jsonParam.put("ename", "");
+//        }
+        {
+            jsonParam.put("kind", "2");
+            jsonParam.put("page", "1");
+            jsonParam.put("num", "3");
+            jsonParam.put("username", "");
+            jsonParam.put("ename", "斗鸡");
+        }
+        JSONObject jsonObject = new JSONObject(jsonParam);
+        JsonRequestToEnity<UserInfo> matchRequest = new JsonRequestToEnity<UserInfo>(Request.Method.POST, url, jsonObject, UserInfo.class, new Response.Listener<UserInfo>() {
+
+            @Override
+            public void onResponse(UserInfo info) {
+                if(info.getCode()>0){
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                AppContext.showToast(R.string.tip_request_fail);
+            }
+        });
+        VolleyHelper.getInstance().add(matchRequest);
+    }
+
+    private void test2() {
+        String url = "http://101.201.72.189/p1/testfinal/json/iss.php";
+        Map<String, String> jsonParam = new HashMap<String, String>();
+        jsonParam.put("ename", "男子400M");
+        jsonParam.put("style", "0");
+        jsonParam.put("jname", "12");
+        JSONObject jsonObject = new JSONObject(jsonParam);
+        JSONArray jsonArray = new JSONArray();
+
+        Map<String, String> jsonArraryParam = new HashMap<String, String>();
+        jsonArraryParam.put("username","t11");
+        jsonArraryParam.put("score","03:22:12");
+        Map<String, String> jsonArraryParam2 = new HashMap<String, String>();
+        jsonArraryParam2.put("username","t12");
+        jsonArraryParam2.put("score","03:22:12");
+        jsonArray.put(new JSONObject(jsonArraryParam));
+        jsonArray.put(new JSONObject(jsonArraryParam2));
+        try {
+            jsonObject.put("data",jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonRequestToEnity<UserInfo> matchRequest = new JsonRequestToEnity<UserInfo>(Request.Method.POST, url, jsonObject, UserInfo.class, new Response.Listener<UserInfo>() {
+
+            @Override
+            public void onResponse(UserInfo info) {
+                if(info.getCode()>0){
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                AppContext.showToast(R.string.tip_request_fail);
+            }
+        });
+        VolleyHelper.getInstance().add(matchRequest);
+    }
+
+    private void test1() {
+        String url = "http://101.201.72.189/p1/testfinal/json/get_user_mess.php";
+        Map<String, Integer> jsonParam = new HashMap<String, Integer>();
+        jsonParam.put("id", 25);
+        jsonParam.put("job", 1);
+        JSONObject jsonObject = new JSONObject(jsonParam);
+        JsonRequestToEnity<UserInfo> matchRequest = new JsonRequestToEnity<UserInfo>(Request.Method.POST, url, jsonObject, UserInfo.class, new Response.Listener<UserInfo>() {
+
+            @Override
+            public void onResponse(UserInfo info) {
+                if(info.getCode()>0){
+                    AppContext.showToast(R.string.tip_sign_up_success);
+                }
+                else{
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                AppContext.showToast(R.string.tip_request_fail);
+            }
+        });
+        VolleyHelper.getInstance().add(matchRequest);
     }
 
     private void handleRegister() {
@@ -125,6 +311,7 @@ public class LoginActivity extends BaseActivity {
         jsonParam.put("sex", sex);
         jsonParam.put("name", et_name.getText().toString());
         jsonParam.put("email", et_email.getText().toString());
+        jsonParam.put("face", "file://c:\\\\windows\\\\index.jpg");
         JSONObject jsonObject = new JSONObject(jsonParam);
         JsonRequestToEnity<UserRegister> registerRequest = new JsonRequestToEnity<UserRegister>(Method.POST, url, jsonObject, UserRegister.class, new Response.Listener<UserRegister>() {
 
@@ -187,6 +374,7 @@ public class LoginActivity extends BaseActivity {
                 if (user.getCode() > 0) {
                     PreferenceHelper.getInstance().setValue("user-id",String.valueOf(user.getData().getId()));
                     PreferenceHelper.getInstance().setValue("user-job",theJob);
+                    PreferenceHelper.getInstance().setValue("user-firstLogin","first");
                     handleLoginSuccess();
                 } else {
                     AppContext.showToast(R.string.tip_login_fail);

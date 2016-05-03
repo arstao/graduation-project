@@ -55,10 +55,13 @@ public class MineFragment extends BaseFragment {
 
     @Override
     public void onStart() {
-        if(!helper.getValue("user-id","0").equals("0")){
-            getLocalData();
-        }else {
+        String first = helper.getValue("user-firstLogin", "0");
+
+        if(first.equals("first")){
             requestData();
+            PreferenceHelper.getInstance().setValue("user-firstLogin","noFirst");
+        }else {
+             getLocalData();
         }
         super.onStart();
     }
@@ -86,12 +89,12 @@ public class MineFragment extends BaseFragment {
             @Override
             public void onResponse(UserInfo info) {
                 if(info.getCode()>0){
-                tv_email.setText(info.getData().getJemail());
+                tv_email.setText(info.getData().getPemail());
                     tv_job.setText(helper.getValue("user-job"));
                     tv_username.setText(info.getData().getUsername());
                     tv_sex.setText(info.getData().getSex());
 
-                    helper.setValue("user-email",info.getData().getJemail());
+                    helper.setValue("user-email",info.getData().getPemail());
                     helper.setValue("user-name",info.getData().getUsername());
                     helper.setValue("user-sex",info.getData().getSex());
                 }

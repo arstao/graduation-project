@@ -22,7 +22,15 @@
             android:scrollingCache="true" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
-
+<Button
+    android:id="@+id/btn_confirm"
+    android:layout_alignParentRight="true"
+    android:gravity="center"
+    android:layout_centerInParent="true"
+    android:layout_width="50dp"
+    android:layout_height="100dp"
+    android:layout_marginRight="10dp"
+    android:text="全部提交"/>
 <com.arstao.gradesystem.UI.widget.EmptyLayout
     android:id="@+id/error_layout"
     android:layout_width="match_parent"

@@ -11,12 +11,6 @@ public enum MainPagerTab {
             , PagerTab.class),
     COMPETITIVE(1,R.string.pagertab_2,PagerTab.class),
     ENJOY(2,R.string.pagertab_3,PagerTab.class);
-//    ALL(0, R.string.pagertab_1
-//            ,
-//         PagerTab1.class),
-//    COMPETITIVE(1,R.string.pagertab_2,PagerTab2.class),
-//    ENJOY(1,R.string.pagertab_3,PagerTab3.class);
-//    MAN(1,R.string.pagertab_4,PagerTab.class);
 
     private int idx;
     private int resName;

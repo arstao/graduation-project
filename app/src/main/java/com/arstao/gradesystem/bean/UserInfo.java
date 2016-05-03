@@ -22,25 +22,18 @@ public class UserInfo extends BaseEnity {
     }
 
     public static class Data{
-        private String jname;
+        private String pname;
         private String sex;
-        private String jemail;
+        private String pemail;
         private String username;
+        private String face;
 
-        public String getJname() {
-            return jname;
+        public String getPname() {
+            return pname;
         }
 
-        public void setJname(String jname) {
-            this.jname = jname;
-        }
-
-        public String getJemail() {
-            return jemail;
-        }
-
-        public void setJemail(String jemail) {
-            this.jemail = jemail;
+        public void setPname(String pname) {
+            this.pname = pname;
         }
 
         public String getSex() {
@@ -51,6 +44,13 @@ public class UserInfo extends BaseEnity {
             this.sex = sex;
         }
 
+        public String getPemail() {
+            return pemail;
+        }
+
+        public void setPemail(String pemail) {
+            this.pemail = pemail;
+        }
 
         public String getUsername() {
             return username;
@@ -58,6 +58,14 @@ public class UserInfo extends BaseEnity {
 
         public void setUsername(String username) {
             this.username = username;
+        }
+
+        public String getFace() {
+            return face;
+        }
+
+        public void setFace(String face) {
+            this.face = face;
         }
     }
 }
