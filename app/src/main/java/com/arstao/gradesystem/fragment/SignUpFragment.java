@@ -10,11 +10,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.arstao.gradesystem.AppContext;
 import com.arstao.gradesystem.R;
+import com.arstao.gradesystem.Util.PreferenceHelper;
 import com.arstao.gradesystem.Volley.JsonRequestToEnity;
 import com.arstao.gradesystem.Volley.VolleyHelper;
-import com.arstao.gradesystem.adapter.SignUpAdapter;
+import com.arstao.gradesystem.adapter.PagerTabAdapter;
 import com.arstao.gradesystem.base.BaseListFragment;
 import com.arstao.gradesystem.base.ListBaseAdapter;
+import com.arstao.gradesystem.bean.EmptyResopne;
 import com.arstao.gradesystem.bean.MatchBean;
 import com.arstao.gradesystem.bean.UserInfo;
 
@@ -31,7 +33,7 @@ public class SignUpFragment extends BaseListFragment<MatchBean.Data> implements 
     public static final String ARGUMENT = "argument";
     @Override
     protected ListBaseAdapter<MatchBean.Data> getListAdapter() {
-        return new SignUpAdapter();
+        return new PagerTabAdapter(false);
     }
 
     @Override
@@ -62,6 +64,8 @@ public class SignUpFragment extends BaseListFragment<MatchBean.Data> implements 
                 public void onResponse(MatchBean matchBean) {
                     if(matchBean.getCode()>0){
                         executeOnLoadDataSuccess(matchBean.getData());
+                    }else {
+                        executeOnLoadDataError();
                     }
                 }
             }, new Response.ErrorListener() {
@@ -120,17 +124,17 @@ public class SignUpFragment extends BaseListFragment<MatchBean.Data> implements 
     public void onConfirm(String string) {
         String url = "http://101.201.72.189/p1/testfinal/json/book_applied.php";
         Map<String, String> jsonParam = new HashMap<String, String>();
-        jsonParam.put("username", "aaa");
-        jsonParam.put("name", "扣的");
+        jsonParam.put("username", PreferenceHelper.getInstance().getValue("user-username"));
+        jsonParam.put("name", PreferenceHelper.getInstance().getValue("user-name"));
         jsonParam.put("ename", string);
-        jsonParam.put("job", "1");
+        jsonParam.put("job", PreferenceHelper.getInstance().getValue("user-job"));
         JSONObject jsonObject = new JSONObject(jsonParam);
-        JsonRequestToEnity<UserInfo> matchRequest = new JsonRequestToEnity<UserInfo>(Request.Method.POST, url, jsonObject, UserInfo.class, new Response.Listener<UserInfo>() {
+        JsonRequestToEnity<EmptyResopne> matchRequest = new JsonRequestToEnity<EmptyResopne>(Request.Method.POST, url, jsonObject, EmptyResopne.class, new Response.Listener<EmptyResopne>() {
 
             @Override
-            public void onResponse(UserInfo info) {
-                if(info.getCode()>0){
-                    AppContext.showToast(R.string.tip_sign_up_fail);
+            public void onResponse(EmptyResopne resopne) {
+                if(resopne.getCode()>0){
+                    AppContext.showToast(R.string.tip_sign_up_success);
                 }
             }
         }, new Response.ErrorListener() {

@@ -23,17 +23,24 @@ public class GradeDetailAdapter extends ListBaseAdapter<GradeDetailBean.Data> {
         convertView = getLayoutInflater(parent.getContext()).inflate(
                 R.layout.item_grade_detail, null);
         TextView tv_name = (TextView) convertView.findViewById(R.id.tv_name);
+        TextView tv_score = (TextView) convertView.findViewById(R.id.tv_score);
         EditText et_score = (EditText) convertView.findViewById(R.id.et_score);
         GradeDetailBean.Data item =mDatas.get(position);
-
         tv_name.setText(item.getPname());
-        tv_name.setTag(item.getUsername());
-        if(item.getStyle().equals("0")){
-            et_score.setHint(R.string.hint_score_time);
-        }else {
-            et_score.setHint(R.string.hint_score);
+        //有成绩则显示成绩，没有就输入成绩提交
+        if(item.getStatue().equals("1")){
+          tv_score.setText(item.getScore());
+            tv_score.setVisibility(View.VISIBLE);
         }
-
+        else {
+            tv_name.setTag(item.getUsername());
+            if (item.getStyle().equals("0")) {
+                et_score.setHint(R.string.hint_score_time);
+            } else {
+                et_score.setHint(R.string.hint_score);
+            }
+            et_score.setVisibility(View.VISIBLE);
+        }
         return convertView;
     }
 

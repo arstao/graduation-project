@@ -84,13 +84,22 @@ protected  abstract Toolbar setToolBar();
     }
 
     protected void init(Bundle savedInstanceState) {}
-
+protected boolean isSetTitle() {
+    return true;
+}
+    protected   String getMyTitle(){
+      return  getString(R.string.app_name);
+    }
     protected void initActionBar(ActionBar actionBar) {
         if (actionBar == null)
             return;
         if (hasBackButton()) {
             mActionBar.setDisplayHomeAsUpEnabled(true);
             mActionBar.setHomeButtonEnabled(true);
+            if(isSetTitle()){
+                TextView tv_title = (TextView) findViewById(R.id.tv_title);
+                tv_title.setText(getMyTitle());
+            }
         } else {
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE);
             actionBar.setDisplayUseLogoEnabled(false);

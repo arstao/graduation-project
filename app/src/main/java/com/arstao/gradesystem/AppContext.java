@@ -1,23 +1,18 @@
 package com.arstao.gradesystem;
 
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.graphics.Bitmap;
 import android.widget.Toast;
 
-import com.arstao.gradesystem.Util.CyptoUtils;
 import com.arstao.gradesystem.Util.StringUtils;
 import com.arstao.gradesystem.base.BaseApplication;
-import com.arstao.gradesystem.bean.Constants;
-import com.arstao.gradesystem.bean.User;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.Properties;
 import java.util.UUID;
-
-import static com.arstao.gradesystem.AppConfig.KEY_FRITST_START;
-import static com.arstao.gradesystem.AppConfig.KEY_LOAD_IMAGE;
-import static com.arstao.gradesystem.AppConfig.KEY_NIGHT_MODE_SWITCH;
-import static com.arstao.gradesystem.AppConfig.KEY_TWEET_DRAFT;
 
 
 public class AppContext extends BaseApplication {
@@ -51,10 +46,23 @@ public class AppContext extends BaseApplication {
 
     private boolean login;
 
+    private  static DisplayImageOptions options = new DisplayImageOptions.Builder()
+            .showImageOnLoading(R.drawable.alien)
+            .showImageOnFail(R.drawable.alien)
+            .cacheInMemory(true)
+            .cacheOnDisk(true)
+            .bitmapConfig(Bitmap.Config.RGB_565)
+            .build();
+    public static  DisplayImageOptions getUilImageOptions(){
+        return  options;
+    }
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
+        ImageLoaderConfiguration configuration = ImageLoaderConfiguration.createDefault(this);
+        ImageLoader.getInstance().init(configuration);
+
 //        init();
 //        initLogin();
 
@@ -79,15 +87,6 @@ public class AppContext extends BaseApplication {
 //        HttpConfig.CACHEPATH = "OSChina/imagecache";
     }
 
-    private void initLogin() {
-        User user = getLoginUser();
-        if (null != user && user.getId() > 0) {
-            login = true;
-            loginUid = user.getId();
-        } else {
-            this.cleanLoginInfo();
-        }
-    }
 
     /**
      * 获得当前app运行的AppContext
@@ -161,202 +160,8 @@ public class AppContext extends BaseApplication {
         return info;
     }
 
-    /**
-     * 保存登录信息
-     *
-     * @param user 用户信息
-     */
-    @SuppressWarnings("serial")
-    public void saveUserInfo(final User user) {
-        this.loginUid = user.getId();
-        this.login = true;
-        setProperties(new Properties() {
-            {
-                setProperty("user.uid", String.valueOf(user.getId()));
-                setProperty("user.name", user.getUsername());
-//                setProperty("user.face", user.getPortrait());// 用户头像-文件名
-                setProperty("user.account", user.getAccount());
-                setProperty("user.pwd", CyptoUtils.encode("GS", user.getPwd()));
-
-                setProperty("user.job",user.getJob());
-                setProperty("user.sex",user.getSex());
-                setProperty("user.email",user.getEmail());
-//                setProperty("user.location", user.getLocation());
-//                setProperty("user.followers",
-//                        String.valueOf(user.getFollowers()));
-//                setProperty("user.fans", String.valueOf(user.getFans()));
-//                setProperty("user.score", String.valueOf(user.getScore()));
-//                setProperty("user.favoritecount",
-//                        String.valueOf(user.getFavoritecount()));
-//                setProperty("user.gender", String.valueOf(user.getGender()));
-//                setProperty("user.isRememberMe",
-//                        String.valueOf(user.isRememberMe()));// 是否记住我的信息
-            }
-        });
-    }
-
-    /**
-     * 更新用户信息
-     *
-     * @param user
-     */
-    @SuppressWarnings("serial")
-    public void updateUserInfo(final User user) {
-        setProperties(new Properties() {
-            {
-                setProperty("user.name", user.getName());
-
-//                setProperty("user.face", user.getPortrait());// 用户头像-文件名
-//                setProperty("user.followers",
-//                        String.valueOf(user.getFollowers()));
-//                setProperty("user.fans", String.valueOf(user.getFans()));
-//                setProperty("user.score", String.valueOf(user.getScore()));
-//                setProperty("user.favoritecount",
-//                        String.valueOf(user.getFavoritecount()));
-//                setProperty("user.gender", String.valueOf(user.getGender()));
-            }
-        });
-    }
-
-    /**
-     * 获得登录用户的信息
-     *
-     * @return
-     */
-    public User getLoginUser() {
-        User user = new User();
-        user.setId(StringUtils.toInt(getProperty("user.uid"), 0));
-        user.setUsername(getProperty("user.name"));
-//        user.setPortrait(getProperty("user.face"));
-        user.setAccount(getProperty("user.account"));
-//        user.setType(getProperty("user.type"));
-        user.setJob(getProperty("user.job"));
-        user.setSex(getProperty("user.sex"));
-        user.setEmail(getProperty("user.email"));
-//        user.setLocation(getProperty("user.location"));
-//        user.setFollowers(StringUtils.toInt(getProperty("user.followers"), 0));
-//        user.setFans(StringUtils.toInt(getProperty("user.fans"), 0));
-//        user.setScore(StringUtils.toInt(getProperty("user.score"), 0));
-//        user.setFavoritecount(StringUtils.toInt(
-//                getProperty("user.favoritecount"), 0));
-//        user.setRememberMe(StringUtils.toBool(getProperty("user.isRememberMe")));
-//        user.setGender(getProperty("user.gender"));
-        return user;
-    }
-
-    /**
-     * 清除登录信息
-     */
-    public void cleanLoginInfo() {
-        this.loginUid = 0;
-        this.login = false;
-        removeProperty("user.uid", "user.name", "user.face", "user.location",
-                "user.followers", "user.fans", "user.score",
-                "user.isRememberMe", "user.gender", "user.favoritecount");
-    }
-
-    public int getLoginUid() {
-        return loginUid;
-    }
-
-    public boolean isLogin() {
-        return login;
-    }
-
-    /**
-     * 用户注销
-     */
-    public void Logout() {
-        cleanLoginInfo();
-//        ApiHttpClient.cleanCookie();
-        this.cleanCookie();
-        this.login = false;
-        this.loginUid = 0;
-
-        Intent intent = new Intent(Constants.INTENT_ACTION_LOGOUT);
-        sendBroadcast(intent);
-    }
-
-    /**
-     * 清除保存的缓存
-     */
-    public void cleanCookie() {
-        removeProperty(AppConfig.CONF_COOKIE);
-    }
-
-    /**
-     * 清除app缓存
-     */
-    public void clearAppCache() {
-//        DataCleanManager.cleanDatabases(this);
-//        // 清除数据缓存
-//        DataCleanManager.cleanInternalCache(this);
-//        // 2.2版本才有将应用缓存转移到sd卡的功能
-//        if (isMethodsCompat(android.os.Build.VERSION_CODES.FROYO)) {
-//            DataCleanManager.cleanCustomCache(MethodsCompat
-//                    .getExternalCacheDir(this));
-//        }
-//        // 清除编辑器保存的临时内容
-//        Properties props = getProperties();
-//        for (Object key : props.keySet()) {
-//            String _key = key.toString();
-//            if (_key.startsWith("temp"))
-//                removeProperty(_key);
-//        }
-//        Core.getKJBitmap().cleanCache();
-    }
-
-    public static void setLoadImage(boolean flag) {
-        set(KEY_LOAD_IMAGE, flag);
-    }
 
     public static void showToast(int resId){
         Toast.makeText(getInstance(),getInstance().getString(resId),Toast.LENGTH_SHORT).show();
-    }
-    /**
-     * 判断当前版本是否兼容目标版本的方法
-     *
-     * @param VersionCode
-     * @return
-     */
-    public static boolean isMethodsCompat(int VersionCode) {
-        int currentVersion = android.os.Build.VERSION.SDK_INT;
-        return currentVersion >= VersionCode;
-    }
-
-    public static String getTweetDraft() {
-        return getPreferences().getString(
-                KEY_TWEET_DRAFT + getInstance().getLoginUid(), "");
-    }
-
-    public static void setTweetDraft(String draft) {
-        set(KEY_TWEET_DRAFT + getInstance().getLoginUid(), draft);
-    }
-
-    public static String getNoteDraft() {
-        return getPreferences().getString(
-                AppConfig.KEY_NOTE_DRAFT + getInstance().getLoginUid(), "");
-    }
-
-    public static void setNoteDraft(String draft) {
-        set(AppConfig.KEY_NOTE_DRAFT + getInstance().getLoginUid(), draft);
-    }
-
-    public static boolean isFristStart() {
-        return getPreferences().getBoolean(KEY_FRITST_START, true);
-    }
-
-    public static void setFristStart(boolean frist) {
-        set(KEY_FRITST_START, frist);
-    }
-
-    //夜间模式
-    public static boolean getNightModeSwitch() {
-        return getPreferences().getBoolean(KEY_NIGHT_MODE_SWITCH, false);
-    }
-
-    // 设置夜间模式
-    public static void setNightModeSwitch(boolean on) {
-        set(KEY_NIGHT_MODE_SWITCH, on);
     }
 }

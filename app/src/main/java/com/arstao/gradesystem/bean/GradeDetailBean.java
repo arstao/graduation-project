@@ -27,6 +27,24 @@ public class GradeDetailBean extends BaseEnity {
         private String pname;
         private String username;
         private String style;
+private String score;
+     private String   statue;
+
+        public String getStatue() {
+            return statue;
+        }
+
+        public void setStatue(String statue) {
+            this.statue = statue;
+        }
+
+        public String getScore() {
+            return score;
+        }
+
+        public void setScore(String score) {
+            this.score = score;
+        }
 
         public String getPname() {
             return pname;

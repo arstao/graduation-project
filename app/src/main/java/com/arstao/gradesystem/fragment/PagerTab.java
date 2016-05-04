@@ -54,6 +54,8 @@ protected int getKind(){
                 public void onResponse(MatchBean matchBean) {
                     if(matchBean.getCode()>0){
                         executeOnLoadDataSuccess(matchBean.getData());
+                    }else {
+                        executeOnLoadDataError();
                     }
                 }
             }, new Response.ErrorListener() {

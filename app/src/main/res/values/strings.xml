@@ -30,11 +30,13 @@
     <string name="tip_register_fail">注册失败</string>
     <string name="tip_login_fail">登录失败</string>
     <string name="tip_request_fail">请求数据失败</string>
-    <string name="tip_sign_up_success">报名成功</string>
+    <string name="tip_sign_up_success">报名成功,请等待审核</string>
     <string name="tip_sign_up_fail">报名失败</string>
     <string name="sign_up_dialog_content">确定要报名吗？</string>
 
     <string name="hint_score">打分</string>
-    <string name="hint_score_time">计分： 00:01:07</string>
+    <string name="hint_score_time">计分格式： 00:01:07</string>
     <string name="grade_detail">评分详情</string>
+    <string name="tip_grade_success">打分成功</string>
+    <string name="tip_request_empty">数据为空</string>
 </resources>
