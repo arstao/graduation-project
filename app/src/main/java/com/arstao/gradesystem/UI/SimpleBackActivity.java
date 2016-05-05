@@ -28,7 +28,8 @@ public class SimpleBackActivity extends BaseActivity {
         FragmentManager fm = getSupportFragmentManager();
 //        mContentFragment = (Fragment) fm.findFragmentById();
         int page = (int) getIntent().getExtras().get(SimpleBackActivity.BUNDLE_KEY_PAGE);
-        String extraString = getIntent().getExtras().getString("Argument");
+//        String extraString = getIntent().getExtras().getString("Argument");
+        Bundle extras = getIntent().getExtras();
         mContentFragment = fm.findFragmentByTag(String.valueOf(page));
         if(mContentFragment == null )
         {
@@ -37,9 +38,9 @@ public class SimpleBackActivity extends BaseActivity {
                if(simple.getValue()==page){
                    try {
                        Fragment f = (Fragment) simple.getClz().newInstance();
-                       Bundle args =new Bundle();
-                       args.putString("Argument", extraString);
-                       f.setArguments(args);
+//                       Bundle args =new Bundle();
+//                       args.putString("Argument", extraString);
+                       f.setArguments(extras);
                        mContentFragment=f;
                        fm.beginTransaction().add(f,String.valueOf(page)).commit();
                        break;

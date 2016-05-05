@@ -2,20 +2,25 @@ package com.arstao.gradesystem.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.View;
+import android.widget.AdapterView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.arstao.gradesystem.AppContext;
 import com.arstao.gradesystem.R;
+import com.arstao.gradesystem.Util.UIHelper;
 import com.arstao.gradesystem.Volley.JsonRequestToEnity;
 import com.arstao.gradesystem.adapter.PagerTabAdapter;
 import com.arstao.gradesystem.base.BaseListFragment;
 import com.arstao.gradesystem.base.ListBaseAdapter;
 import com.arstao.gradesystem.bean.MatchBean;
+import com.arstao.gradesystem.bean.SimpleBackPage;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +42,24 @@ protected int getKind(){
     }
     return kind;
 }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position==mAdapter.getDataSize()){
+                    return;
+                }
+                Bundle bundle = new Bundle();
+                Serializable bean = (Serializable) mAdapter.getData().get(position);
+                bundle.putSerializable("Argument",bean);
+                UIHelper.showSimpleBackWithBundle(getActivity(), SimpleBackPage.Match_DETAIL,bundle);
+            }
+        });
+    }
+
     @Override
     protected void sendRequestData() {
 
@@ -84,9 +107,6 @@ protected int getKind(){
 
     public static Fragment newInstance(int num) {
         PagerTab f =new PagerTab();
-
-
-
         // Supply num input as an argument.
 
         Bundle args =new Bundle();

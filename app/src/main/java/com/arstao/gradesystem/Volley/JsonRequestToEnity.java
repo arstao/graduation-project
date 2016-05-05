@@ -26,7 +26,6 @@ private Class<T> mClazz;
     public JsonRequestToEnity(int method, String url, JSONObject jsonRequest,Class<T> clazz,Response.Listener<T> listener, Response.ErrorListener errorListener) {
         super(method, url, jsonRequest == null?null:jsonRequest.toString(), listener, errorListener);
         mClazz=clazz;
-
     }
 
     public JsonRequestToEnity(String url, JSONObject jsonRequest, Class<T> clazz,Response.Listener<T> listener, Response.ErrorListener errorListener) {

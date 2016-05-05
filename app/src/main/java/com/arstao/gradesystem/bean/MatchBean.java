@@ -2,6 +2,7 @@ package com.arstao.gradesystem.bean;
 
 import com.arstao.gradesystem.base.BaseEnity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -12,7 +13,8 @@ import java.util.List;
  * 修改时间：2016/4/28 9:33
  * 修改备注：
  */
-public class MatchBean extends BaseEnity {
+public class MatchBean extends BaseEnity{
+
     private List<Data> data;
 
     public List<Data> getData() {
@@ -23,7 +25,8 @@ public class MatchBean extends BaseEnity {
         this.data = data;
     }
 
-    public static class Data{
+    public static class Data implements Serializable{
+        private static final long serialVersionUID = -6919461967497580385L;
         private String edate;
 
         public String getEdate() {

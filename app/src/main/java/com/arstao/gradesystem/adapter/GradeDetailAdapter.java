@@ -18,6 +18,13 @@ import com.arstao.gradesystem.bean.GradeDetailBean;
  * 修改备注：
  */
 public class GradeDetailAdapter extends ListBaseAdapter<GradeDetailBean.Data> {
+    private  boolean isGrade;
+    public GradeDetailAdapter(){
+    super();
+    }
+    public GradeDetailAdapter(boolean isGrade){
+        this.isGrade =isGrade;
+    }
     @Override
     protected View getRealView(int position, View convertView, ViewGroup parent) {
         convertView = getLayoutInflater(parent.getContext()).inflate(
@@ -34,12 +41,17 @@ public class GradeDetailAdapter extends ListBaseAdapter<GradeDetailBean.Data> {
         }
         else {
             tv_name.setTag(item.getUsername());
-            if (item.getStyle().equals("0")) {
-                et_score.setHint(R.string.hint_score_time);
-            } else {
-                et_score.setHint(R.string.hint_score);
+            if(isGrade) {
+                if (item.getStyle().equals("0")) {
+                    et_score.setHint(R.string.hint_score_time);
+                } else {
+                    et_score.setHint(R.string.hint_score);
+                }
+                et_score.setVisibility(View.VISIBLE);
+            }else {
+                tv_score.setText("选手暂无成绩");
+                tv_score.setVisibility(View.VISIBLE);
             }
-            et_score.setVisibility(View.VISIBLE);
         }
         return convertView;
     }
