@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -63,14 +64,14 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             }
             TabHost.TabSpec tab = mTabHost.newTabSpec(getString(mainTab.getResName()));
             tab.setIndicator(getTabItemView(mainTab));
-            tab.setContent(new TabHost.TabContentFactory() {
-                @Override
-                public View createTabContent(String tag) {
-                    return new View(MainActivity.this);
-                }
-            });
+//            tab.setContent(new TabHost.TabContentFactory() {
+//                @Override
+//                public View createTabContent(String tag) {
+//                    return new View(MainActivity.this);
+//                }
+//            });
             mTabHost.addTab(tab, mainTab.getClz(), null);
-//            mTabHost.getTabWidget().getChildAt(i).setOnTouchListener(MainActivity.this);
+            mTabHost.setOnTabChangedListener(this);
         }
     }
 
@@ -79,9 +80,9 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 .inflate(R.layout.tab_item_view, null);
         ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
         imageView.setImageResource(mainTab.getResIcon());
+        imageView.setLayoutParams(new LinearLayout.LayoutParams(150,150));
         TextView textView = (TextView) view.findViewById(R.id.textview);
         textView.setText(mainTab.getResName());
-
         return view;
     }
 
@@ -106,14 +107,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
         return super.onOptionsItemSelected(item);
     }
-//////////////////
     @Override
-    public boolean onTouch(View v, MotionEvent event) {
-
-//        if (event.getAction() == MotionEvent.ACTION_DOWN
-//                && !v.equals(mTabHost.getCurrentTabView())){
-//
-//        }
+    public boolean onTouch(View w, MotionEvent event) {
         return false;
     }
 

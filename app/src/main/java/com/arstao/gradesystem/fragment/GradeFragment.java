@@ -27,9 +27,10 @@ import java.util.Map;
 
 public class GradeFragment extends BaseListFragment<MatchBean.Data>{
 public static final String ARGUMENT ="Argument";
+    private  final int pageSize = 100;
     @Override
     protected ListBaseAdapter<MatchBean.Data> getListAdapter() {
-        return new PagerTabAdapter();
+        return new PagerTabAdapter(false);
     }
 
     @Override
@@ -54,7 +55,7 @@ public static final String ARGUMENT ="Argument";
         String url = "http://101.201.72.189/p1/testfinal/json/get_jug_eve.php";
             Map<String, String> jsonParam = new HashMap<String, String>();
         jsonParam.put("username", PreferenceHelper.getInstance().getValue("user-username",""));
-            jsonParam.put("num", "2");
+            jsonParam.put("num", String.valueOf(pageSize));
         jsonParam.put("page",String.valueOf(mCurrentPage+1));
             JSONObject jsonObject = new JSONObject(jsonParam);
             JsonRequestToEnity<MatchBean> matchRequest = new JsonRequestToEnity<MatchBean>(Request.Method.POST, url, jsonObject, MatchBean.class, new Response.Listener<MatchBean>() {

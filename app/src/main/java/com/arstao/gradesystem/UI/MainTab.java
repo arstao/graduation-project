@@ -9,10 +9,10 @@ import com.arstao.gradesystem.fragment.SignUpFragment;
 
 public enum MainTab {
 
-	SCAN(0, R.string.tab_scan, R.drawable.alien,ScanFragment.class),
-	GRADE(1, R.string.tab_grade, R.drawable.alien,GradeFragment.class),
-	SIGN_UP(2, R.string.tab_sign_up, R.drawable.alien,SignUpFragment.class),
-	MINE(3,R.string.tab_mine,R.drawable.alien,MineFragment.class);
+	SCAN(0, R.string.tab_scan, R.drawable.scan,ScanFragment.class),
+	GRADE(1, R.string.tab_grade, R.drawable.grade,GradeFragment.class),
+	SIGN_UP(2, R.string.tab_sign_up, R.drawable.sign_up,SignUpFragment.class),
+	MINE(3,R.string.tab_mine,R.drawable.mine,MineFragment.class);
 //
 //	TWEET(img1, R.string.main_tab_name_tweet, R.drawable.tab_icon_tweet,
 //			TweetsViewPagerFragment.class),

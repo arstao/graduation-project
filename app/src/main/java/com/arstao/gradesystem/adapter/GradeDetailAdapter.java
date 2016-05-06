@@ -18,7 +18,7 @@ import com.arstao.gradesystem.bean.GradeDetailBean;
  * 修改备注：
  */
 public class GradeDetailAdapter extends ListBaseAdapter<GradeDetailBean.Data> {
-    private  boolean isGrade;
+    private  boolean isGrade =false;
     public GradeDetailAdapter(){
     super();
     }

@@ -29,7 +29,7 @@ import java.util.Random;
 
 
 public class PagerTab extends BaseListFragment<MatchBean.Data>{
-
+private  final int pageSize = 7;
     @Override
     protected ListBaseAdapter<MatchBean.Data> getListAdapter() {
         return new PagerTabAdapter();
@@ -55,7 +55,7 @@ protected int getKind(){
                 Bundle bundle = new Bundle();
                 Serializable bean = (Serializable) mAdapter.getData().get(position);
                 bundle.putSerializable("Argument",bean);
-                UIHelper.showSimpleBackWithBundle(getActivity(), SimpleBackPage.Match_DETAIL,bundle);
+                UIHelper.showSimpleBackWithBundle(getActivity(), SimpleBackPage.MATCH_DETAIL,bundle);
             }
         });
     }
@@ -67,7 +67,7 @@ protected int getKind(){
         String url = "http://101.201.72.189/p1/testfinal/json/get_home_page.php";
 
             Map<String, Integer> jsonParam = new HashMap<String, Integer>();
-            jsonParam.put("num", 6);
+            jsonParam.put("num", pageSize);
             jsonParam.put("kind", getKind());
         jsonParam.put("page",mCurrentPage+1);
             JSONObject jsonObject = new JSONObject(jsonParam);

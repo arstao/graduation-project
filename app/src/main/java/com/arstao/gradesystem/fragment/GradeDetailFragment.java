@@ -59,6 +59,10 @@ public class GradeDetailFragment extends BaseListFragment<GradeDetailBean.Data>{
                     ViewGroup viewGroup = (ViewGroup) mListView.getChildAt(i);
                     TextView name = (TextView) viewGroup.getChildAt(0);
                     EditText score = (EditText) viewGroup.getChildAt(1);
+                    if(score.length()==0){
+                        score.setError("成绩不能为空");
+                        return;
+                    }
                     jsonParam.put("username", (String) name.getTag());
                     jsonParam.put("score", score.getText().toString());
                     jsonArray.put(new JSONObject(jsonParam));
@@ -132,7 +136,7 @@ public class GradeDetailFragment extends BaseListFragment<GradeDetailBean.Data>{
 
     @Override
     protected ListBaseAdapter getListAdapter() {
-        return new GradeDetailAdapter();
+        return new GradeDetailAdapter(true);
     }
 
 }

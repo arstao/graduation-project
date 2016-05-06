@@ -42,6 +42,7 @@ public class SimpleBackActivity extends BaseActivity {
 //                       args.putString("Argument", extraString);
                        f.setArguments(extras);
                        mContentFragment=f;
+                       setTitle(simple.getTitle());
                        fm.beginTransaction().add(f,String.valueOf(page)).commit();
                        break;
                    } catch (InstantiationException e) {
@@ -71,6 +72,8 @@ public class SimpleBackActivity extends BaseActivity {
     public void initView() {
 
     }
+
+
 
     @Override
     public void initData() {

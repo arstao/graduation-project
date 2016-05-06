@@ -84,11 +84,24 @@ protected  abstract Toolbar setToolBar();
     }
 
     protected void init(Bundle savedInstanceState) {}
-protected boolean isSetTitle() {
-    return true;
-}
-    protected   String getMyTitle(){
-      return  getString(R.string.app_name);
+    private  boolean isTitle;
+
+    public boolean isTitle() {
+        return isTitle;
+    }
+
+    public void setTitle(boolean title) {
+        isTitle = title;
+    }
+
+    protected   void setMyTitle(String title){
+        if(hasBackButton()){
+        mActionBar.setTitle("");
+        TextView tv_title = (TextView) findViewById(R.id.tv_title);
+        tv_title.setText(title);
+        }else{
+            mActionBar.setTitle(title);
+        }
     }
     protected void initActionBar(ActionBar actionBar) {
         if (actionBar == null)
@@ -96,10 +109,6 @@ protected boolean isSetTitle() {
         if (hasBackButton()) {
             mActionBar.setDisplayHomeAsUpEnabled(true);
             mActionBar.setHomeButtonEnabled(true);
-            if(isSetTitle()){
-                TextView tv_title = (TextView) findViewById(R.id.tv_title);
-                tv_title.setText(getMyTitle());
-            }
         } else {
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE);
             actionBar.setDisplayUseLogoEnabled(false);

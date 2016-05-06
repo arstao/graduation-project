@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GradeSystem</string>
+    <string name="app_name">评分系统</string>
     <string name="action_settings">Settings</string>
 
     <string name="tab_scan">查看</string>
@@ -41,4 +41,5 @@
     <string name="tip_request_empty">数据为空</string>
     <string name="match_detail">比赛详情</string>
     <string name="no_player">暂无选手报名</string>
+    <string name="change_pwd">修改密码</string>
 </resources>

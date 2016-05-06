@@ -376,6 +376,7 @@ public class LoginActivity extends BaseActivity {
                     PreferenceHelper.getInstance().setValue("user-job",theJob);
                     PreferenceHelper.getInstance().setValue("user-name",user.getData().getName());
                     PreferenceHelper.getInstance().setValue("user-username",mUserName);
+                    PreferenceHelper.getInstance().setValue("user-pwd",mPassword);
                     PreferenceHelper.getInstance().setValue("user-firstLogin","first");
                     handleLoginSuccess();
                 } else {
@@ -393,10 +394,6 @@ public class LoginActivity extends BaseActivity {
 
     }
 
-    @Override
-    protected boolean isSetTitle() {
-        return false;
-    }
 
     private void handleLoginSuccess() {
         Intent data = new Intent();
