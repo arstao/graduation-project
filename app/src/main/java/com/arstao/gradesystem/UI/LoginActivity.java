@@ -374,11 +374,13 @@ public class LoginActivity extends BaseActivity {
                 if (user.getCode() > 0) {
                     PreferenceHelper.getInstance().setValue("user-id",String.valueOf(user.getData().getId()));
                     PreferenceHelper.getInstance().setValue("user-job",theJob);
+                    PreferenceHelper.getInstance().setValue("user-name",user.getData().getName());
+                    PreferenceHelper.getInstance().setValue("user-username",mUserName);
+                    PreferenceHelper.getInstance().setValue("user-pwd",mPassword);
                     PreferenceHelper.getInstance().setValue("user-firstLogin","first");
                     handleLoginSuccess();
                 } else {
                     AppContext.showToast(R.string.tip_login_fail);
-                    AppContext.getInstance().cleanLoginInfo();
                 }
 
             }
@@ -391,6 +393,7 @@ public class LoginActivity extends BaseActivity {
         VolleyHelper.getInstance().add(userRequest);
 
     }
+
 
     private void handleLoginSuccess() {
         Intent data = new Intent();

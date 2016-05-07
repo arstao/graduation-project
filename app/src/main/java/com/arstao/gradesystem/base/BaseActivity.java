@@ -84,7 +84,25 @@ protected  abstract Toolbar setToolBar();
     }
 
     protected void init(Bundle savedInstanceState) {}
+    private  boolean isTitle;
 
+    public boolean isTitle() {
+        return isTitle;
+    }
+
+    public void setTitle(boolean title) {
+        isTitle = title;
+    }
+
+    protected   void setMyTitle(String title){
+        if(hasBackButton()){
+        mActionBar.setTitle("");
+        TextView tv_title = (TextView) findViewById(R.id.tv_title);
+        tv_title.setText(title);
+        }else{
+            mActionBar.setTitle(title);
+        }
+    }
     protected void initActionBar(ActionBar actionBar) {
         if (actionBar == null)
             return;

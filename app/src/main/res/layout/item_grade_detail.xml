@@ -6,12 +6,13 @@
 
     android:textSize="16sp"/>
     <TextView
+        android:layout_marginTop="10dp"
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="选手1"
         android:textSize="20sp"
-        android:layout_alignBaseline="@+id/et_score"/>
+        />
     <android.support.v7.widget.AppCompatEditText
         android:id="@+id/et_score"
         android:layout_toRightOf="@+id/tv_name"
@@ -19,6 +20,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:hint="填写分数" />
+        android:layout_alignBaseline="@+id/tv_name"
+        android:hint="填写分数"
+        android:visibility="gone"/>
+    <TextView
+        android:id="@+id/tv_score"
+        android:layout_toRightOf="@+id/tv_name"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        android:text="分数"
+        android:layout_alignBottom="@+id/tv_name"
+        android:visibility="gone"/>
 
 </RelativeLayout>

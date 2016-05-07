@@ -9,7 +9,7 @@
         android:background="@color/graywhite" />
     <RelativeLayout
 
-        android:id="@+id/rl_xiugaimima"
+        android:id="@+id/rl_change_pwd"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:background="@drawable/bg_center_selector"

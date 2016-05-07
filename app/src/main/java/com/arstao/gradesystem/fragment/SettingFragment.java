@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 import com.arstao.gradesystem.AppManager;
 import com.arstao.gradesystem.R;
 import com.arstao.gradesystem.Util.PreferenceHelper;
+import com.arstao.gradesystem.Util.UIHelper;
 import com.arstao.gradesystem.base.BaseFragment;
+import com.arstao.gradesystem.bean.SimpleBackPage;
 
 /**
  * 类描述：
@@ -55,6 +57,12 @@ public class SettingFragment extends BaseFragment {
             public void onClick(View v) {
                 helper.removeAll();
                 AppManager.getAppManager().finishAllActivity();
+            }
+        });
+        view.findViewById(R.id.rl_change_pwd).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIHelper.showSimpleBack(getActivity(), SimpleBackPage.CHANGE_PWD);
             }
         });
     }

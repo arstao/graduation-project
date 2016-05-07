@@ -11,10 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.arstao.gradesystem.AppContext;
 import com.arstao.gradesystem.R;
 import com.arstao.gradesystem.UI.widget.EmptyLayout;
-import com.arstao.gradesystem.Util.TDevice;
 import com.arstao.gradesystem.Util.UIHelper;
 import com.arstao.gradesystem.bean.Constants;
 
@@ -56,26 +54,12 @@ public class MineFragment2 extends Fragment implements View.OnClickListener {
                 UIHelper.showLoginActivity(getActivity());
                 break;
             case R.id.btn_logout:
-                AppContext.getInstance().Logout();
+//                AppContext.getInstance().Logout();
                 break;
         }
     }
 
     private void requestData(boolean refresh) {
-        if (AppContext.getInstance().isLogin()) {
-            mIsWatingLogin = false;
-//            String key = getCacheKey();
-            if (refresh || TDevice.hasInternet()) {
-//                    && (!CacheManager.isExistDataCache(getActivity(), key))) {
-//                sendRequestData();
-            }
-//            else {
-//                readCacheData(key);
-//            }
-        } else {
-            mIsWatingLogin = true;
-        }
-        steupUser();
     }
 
 

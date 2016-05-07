@@ -27,7 +27,12 @@ private  MainPagerTab[] mTabs =MainPagerTab.values();
 
     @Override
     public Fragment getItem(int position) {
-             return PagerTab.newInstance(position);
+        if(position==1){
+            position =5;
+        }else if(position==2){
+            position=4;
+        }
+        return PagerTab.newInstance(position);
     }
 
     @Override

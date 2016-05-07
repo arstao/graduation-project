@@ -10,6 +10,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.arstao.gradesystem.AppContext;
 import com.arstao.gradesystem.R;
+import com.arstao.gradesystem.Util.PreferenceHelper;
 import com.arstao.gradesystem.Util.UIHelper;
 import com.arstao.gradesystem.Volley.JsonRequestToEnity;
 import com.arstao.gradesystem.adapter.PagerTabAdapter;
@@ -26,9 +27,10 @@ import java.util.Map;
 
 public class GradeFragment extends BaseListFragment<MatchBean.Data>{
 public static final String ARGUMENT ="Argument";
+    private  final int pageSize = 100;
     @Override
     protected ListBaseAdapter<MatchBean.Data> getListAdapter() {
-        return new PagerTabAdapter();
+        return new PagerTabAdapter(false);
     }
 
     @Override
@@ -37,6 +39,9 @@ public static final String ARGUMENT ="Argument";
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(position==mAdapter.getDataSize()){
+                    return;
+                }
                 Bundle bundle = new Bundle();
                 String ename = mAdapter.getData().get(position).getEname();
                 bundle.putString("Argument",ename);
@@ -47,11 +52,10 @@ public static final String ARGUMENT ="Argument";
 
     @Override
     protected void sendRequestData() {
-//         sendLocalData();
         String url = "http://101.201.72.189/p1/testfinal/json/get_jug_eve.php";
             Map<String, String> jsonParam = new HashMap<String, String>();
-        jsonParam.put("username","12");
-            jsonParam.put("num", "2");
+        jsonParam.put("username", PreferenceHelper.getInstance().getValue("user-username",""));
+            jsonParam.put("num", String.valueOf(pageSize));
         jsonParam.put("page",String.valueOf(mCurrentPage+1));
             JSONObject jsonObject = new JSONObject(jsonParam);
             JsonRequestToEnity<MatchBean> matchRequest = new JsonRequestToEnity<MatchBean>(Request.Method.POST, url, jsonObject, MatchBean.class, new Response.Listener<MatchBean>() {
@@ -60,6 +64,8 @@ public static final String ARGUMENT ="Argument";
                 public void onResponse(MatchBean matchBean) {
                     if(matchBean.getCode()>0){
                         executeOnLoadDataSuccess(matchBean.getData());
+                    }else {
+                        executeOnLoadDataError();
                     }
                 }
             }, new Response.ErrorListener() {
