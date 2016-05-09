@@ -63,6 +63,16 @@ public class StringUtils {
         return dateFormater.get().format(date);
     }
 
+    /**
+     * 添加对字符串长度的判断
+     *
+     * @param str
+     * @return
+     */
+    public static boolean isNull(String str) {
+        return str == null || str.equals("") || str.equals("null");
+    }
+
 //    /**
 //     * 以友好的方式显示时间
 //     *

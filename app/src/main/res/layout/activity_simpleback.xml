@@ -15,7 +15,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
          />
-    </android.support.v7.widget.Toolbar>>
+        <RelativeLayout
+            android:id="@+id/rl_search"
+            android:gravity="right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/et_search"
+            android:hint="输入搜索条件"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+            <Button
+                android:layout_toRightOf="@+id/et_search"
+                android:layout_alignBaseline="@+id/et_search"
+                android:id="@+id/btn_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
 
     <FrameLayout
         android:id="@+id/fl_content"

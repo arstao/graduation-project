@@ -18,6 +18,8 @@ import android.widget.TextView;
 import com.arstao.gradesystem.AppManager;
 import com.arstao.gradesystem.R;
 import com.arstao.gradesystem.Util.PreferenceHelper;
+import com.arstao.gradesystem.Util.UIHelper;
+import com.arstao.gradesystem.bean.SimpleBackPage;
 import com.arstao.gradesystem.fragment.NavigationDrawerFragment;
 
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener,TabHost.OnTabChangeListener {
@@ -93,16 +95,14 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                UIHelper.showSimpleBack(this, SimpleBackPage.SEARCH);
+//                startActivity(new Intent(MainActivity.this, SearchActivity.class));
+                return true;
         }
 
         return super.onOptionsItemSelected(item);

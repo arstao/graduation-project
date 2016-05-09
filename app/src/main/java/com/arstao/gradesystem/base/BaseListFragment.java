@@ -281,9 +281,13 @@ public abstract class BaseListFragment<T > extends BaseFragment implements Swipe
         }
         mAdapter.setState(adapterState);
         mAdapter.addData(data);
+
         // 判断等于是因为最后有一项是listview的状态
         if (mAdapter.getCount() == 1) {
-
+            if(onlyOne()){
+                executeOnLoadFinish();
+                return;
+            }
             if (needShowEmptyNoData()) {
                 mErrorLayout.setErrorType(EmptyLayout.NODATA);
             } else {
@@ -294,7 +298,9 @@ public abstract class BaseListFragment<T > extends BaseFragment implements Swipe
 
         executeOnLoadFinish();
     }
-
+protected boolean onlyOne(){
+    return  false;
+}
     //加载失败后
     protected void executeOnLoadDataError() {
         //当前为第一页且没有缓存

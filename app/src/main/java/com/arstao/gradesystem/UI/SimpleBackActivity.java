@@ -74,7 +74,6 @@ public class SimpleBackActivity extends BaseActivity {
     }
 
 
-
     @Override
     public void initData() {
 

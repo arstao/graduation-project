@@ -94,21 +94,20 @@ protected  abstract Toolbar setToolBar();
         isTitle = title;
     }
 
-    protected   void setMyTitle(String title){
-        if(hasBackButton()){
-        mActionBar.setTitle("");
-        TextView tv_title = (TextView) findViewById(R.id.tv_title);
-        tv_title.setText(title);
-        }else{
-            mActionBar.setTitle(title);
-        }
-    }
+//    protected   void setMyTitle(String title){
+//        if(hasBackButton()){
+//        mActionBar.setTitle("");
+//        }else{
+//            mActionBar.setTitle(title);
+//        }
+//    }
     protected void initActionBar(ActionBar actionBar) {
         if (actionBar == null)
             return;
         if (hasBackButton()) {
             mActionBar.setDisplayHomeAsUpEnabled(true);
             mActionBar.setHomeButtonEnabled(true);
+
         } else {
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE);
             actionBar.setDisplayUseLogoEnabled(false);

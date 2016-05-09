@@ -21,11 +21,8 @@ import com.arstao.gradesystem.bean.SimpleBackPage;
 import org.json.JSONObject;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 
 public class PagerTab extends BaseListFragment<MatchBean.Data>{
@@ -90,20 +87,7 @@ protected int getKind(){
         mQueue.add(matchRequest);
     }
 
-    private void sendLocalData() {
-        MatchBean.Data p = new MatchBean.Data();
-        Random random = new Random();
-        p.setCname( String.valueOf(random.nextInt())   );
-        p.setEdate(String.valueOf(random.nextInt()) );
-        p.setEplace(String.valueOf(random.nextInt()) );
-        p.setEshow(String.valueOf(random.nextInt()));
-        p.setEname(String.valueOf(random.nextInt()));
-        List<MatchBean.Data> data = new ArrayList<MatchBean.Data>();
-        for(int i =0;i<10;i++){
-            data.add(p);
-        }
-        executeOnLoadDataSuccess(data);
-    }
+
 
     public static Fragment newInstance(int num) {
         PagerTab f =new PagerTab();
