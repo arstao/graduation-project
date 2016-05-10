@@ -37,17 +37,9 @@ private Class<T> mClazz;
         try {
             String je = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
             T result =null;
-            if(je.startsWith("\r\n\r\n")) {
-                String substring = je.substring(5);
-                result = new Gson().fromJson(substring,mClazz);
-            }
-            else  if(je.startsWith("\r\n")) {
-                String substring = je.substring(3);
-                result = new Gson().fromJson(substring,mClazz);
-            }
-          else {
-                 result = new Gson().fromJson(je,mClazz);
-            }
+            int i = je.indexOf("{");
+            String substring = je.substring(i);
+            result = new Gson().fromJson(substring,mClazz);
             if (result==null){
                 return Response.error(new VolleyError());
             }
