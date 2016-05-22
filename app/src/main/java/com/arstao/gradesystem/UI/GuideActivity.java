@@ -46,7 +46,7 @@ public class GuideActivity extends BaseActivity {
         return R.layout.activity_guide;
     }
 
-    private int[] imgs = {R.drawable.image1, R.drawable.image1, R.drawable.image1};
+    private int[] imgs = {R.drawable.ic_guide1, R.drawable.ic_guide2, R.drawable.ic_guide3};
 
     @Override
     public void initView() {
@@ -74,10 +74,9 @@ public class GuideActivity extends BaseActivity {
         tips = new ImageView[imgs.length];
         for (int i = 0; i < imgs.length; i++) {
             ImageView imageView = new ImageView(this);
-            imageView.setLayoutParams(new ViewGroup.LayoutParams(10, 10));
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(1, 1));
             tips[i] = imageView;
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT));
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(20,20));
             layoutParams.leftMargin = 5;
             layoutParams.rightMargin = 5;
             viewGroup.addView(imageView, layoutParams);
@@ -160,9 +159,9 @@ public class GuideActivity extends BaseActivity {
     private void setImageBackground(int selectItems) {
         for (int i = 0; i < tips.length; i++) {
             if (i == selectItems) {
-                tips[i].setBackgroundResource(R.drawable.point_foucs);
+                tips[i].setImageDrawable(getResources().getDrawable(R.drawable.point_focus));
             } else {
-                tips[i].setBackgroundResource(R.drawable.point_normal);
+                tips[i].setImageDrawable(getResources().getDrawable(R.drawable.point_normal));
             }
         }
     }

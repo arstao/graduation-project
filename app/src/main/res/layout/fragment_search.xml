@@ -13,9 +13,10 @@
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/et_search"
                 android:hint="输入搜索条件"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"/>
+                android:gravity="center"
+                />
             <Button
                 android:layout_toRightOf="@+id/et_search"
                 android:id="@+id/btn_search"

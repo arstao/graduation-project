@@ -28,8 +28,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="欢迎来到评分系统" />
+            android:text="欢迎来到评分系统"
+            android:textColor="@color/blue"
+            android:textSize="20sp"/>
 
         <LinearLayout
             android:id="@+id/viewGroup"

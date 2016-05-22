@@ -2,15 +2,18 @@ package com.arstao.gradesystem.fragment;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +32,7 @@ import com.arstao.gradesystem.Volley.JsonRequestToEnity;
 import com.arstao.gradesystem.Volley.VolleyHelper;
 import com.arstao.gradesystem.base.BaseFragment;
 import com.arstao.gradesystem.bean.UserInfo;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONObject;
 
@@ -36,6 +40,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import okhttp3.Callback;
+import okhttp3.Headers;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 
 /**
  * Created by arstao on 2016/2/26.
@@ -47,13 +58,15 @@ public class MineFragment extends BaseFragment {
     private TextView tv_sex;
     private TextView tv_email;
     private PreferenceHelper helper;
-    private String photoTempPath, imgPath = "";
-    private File out;
-    public int crop = 300;// 裁剪大小
-    public static final int CROP_PHOTO_CODE = 12;
+
     private RelativeLayout rl_icon;
     private static final int SELECT_PICTURE = 1;
     private static final int SELECT_CAMER = 2;
+    private String photoTempPath;
+    private String imgPath = "";
+    private File out;
+    public int crop = 300;// 裁剪大小
+    public static final int CROP_PHOTO_CODE = 12;
     private ImageView iv_user_icon;
 
     @Override
@@ -133,12 +146,17 @@ public class MineFragment extends BaseFragment {
             @Override
             public void onResponse(UserInfo info) {
                 if(info.getCode()>0){
-                tv_email.setText(info.getData().getPemail());
+                tv_email.setText(info.getData().getJemail());
                     tv_job.setText(helper.getValue("user-job"));
                     tv_username.setText(info.getData().getUsername());
                     tv_sex.setText(info.getData().getSex());
 
-                    helper.setValue("user-email",info.getData().getPemail());
+                    String photo =info.getData().getFace();
+                    String prefix = "http://";
+                    String uri =prefix + photo;
+                    ImageLoader.getInstance().displayImage(uri, iv_user_icon, AppContext.getUilImageOptions());
+
+                    helper.setValue("user-email",info.getData().getJemail());
                     helper.setValue("user-name",info.getData().getUsername());
                     helper.setValue("user-sex",info.getData().getSex());
                 }
@@ -270,11 +288,13 @@ public class MineFragment extends BaseFragment {
                     try {
                         if (data != null) {
                             Bitmap bitmap = getBitmap();
+                            upLoadByCommonPost(imgPath);
 
-                            iv_user_icon.setImageBitmap(bitmap);
-                            imgPath = photoTempPath;// out.getAbsolutePath();//Until.creatfile(mContext,
-                            // bm1, "zgz");
-                            helper.setValue("user-icon"+helper.getValue("user-name"),imgPath);
+//                            iv_user_icon.setImageBitmap(bitmap);
+////                            ImageLoader.getInstance().displayImage(bitmap, iv_user_icon, AppContext.getUilImageOptions());
+////                            imgPath = photoTempPath;// out.getAbsolutePath();//Until.creatfile(mContext,
+//                            // bm1, "zgz");
+//                            helper.setValue("user-icon"+helper.getValue("user-name"),photoTempPath);
                         }
                     } catch (Exception e) {
                         AppContext.getInstance().showToast(R.string.tip_image_failed);
@@ -285,10 +305,91 @@ public class MineFragment extends BaseFragment {
             e.printStackTrace();
         }
     }
+    /**
+     * Try to return the absolute file path from the given Uri
+     *
+     * @param context
+     * @param uri
+     * @return the file path or null
+     */
+    public static String getRealFilePath( final Context context, final Uri uri ) {
+        if ( null == uri ) return null;
+        final String scheme = uri.getScheme();
+        String data = null;
+        if ( scheme == null )
+            data = uri.getPath();
+        else if ( ContentResolver.SCHEME_FILE.equals( scheme ) ) {
+            data = uri.getPath();
+        } else if ( ContentResolver.SCHEME_CONTENT.equals( scheme ) ) {
+            Cursor cursor = context.getContentResolver().query( uri, new String[] { MediaStore.Images.ImageColumns.DATA }, null, null, null );
+            if ( null != cursor ) {
+                if ( cursor.moveToFirst() ) {
+                    int index = cursor.getColumnIndex( MediaStore.Images.ImageColumns.DATA );
+                    if ( index > -1 ) {
+                        data = cursor.getString( index );
+                    }
+                }
+                cursor.close();
+            }
+        }
+        return data;
+    }
+    private void upLoadByCommonPost(String photoTempPath) {
+//        File file = new File(photoTempPath);
+        File file =out;
+        String value = helper.getValue("user-job");
+        String  job ;
+        if(value.equals("裁判")){
+            job ="0";
+        }
+        else {
+            job="1";
+        }
+        OkHttpClient mOkHttpClient = new OkHttpClient();
+        RequestBody fileBody = RequestBody.create(MediaType.parse("application/octet-stream"), file);
+        MultipartBody.Builder builder = new MultipartBody.Builder();
+        MultipartBody requestBody = builder.addPart(Headers.of(
+                        "Content-Disposition",
+                        "form-data; name=\"username\""),
+                RequestBody.create(null, helper.getValue("user-username"))).addPart(Headers.of(
+                        "Content-Disposition",
+                        "form-data; name=\"job\""),
+                RequestBody.create(null,job ))
+                .addPart(Headers.of(
+                        "Content-Disposition",
+                        "form-data; name=\"userfile\";filename=\"userprofile.jpg\""), fileBody)
+                .setType(MultipartBody.FORM).build();
+
+        okhttp3.Request request = new okhttp3.Request.Builder()
+                .url("http://101.201.72.189/p1/testfinal/json/edit_face.php")
+                .post(requestBody)
+                .build();
+
+        okhttp3.Call call = mOkHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(okhttp3.Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
+                             int i=1;
+                String string = response.body().string();
+                Log.e("TAG", string);
+                i=2;
+            }
+
+        });
+
+    }
 
     private Bitmap getBitmap() {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = 2;
         return BitmapFactory.decodeFile(photoTempPath, options);
     }
+
+
+
 }

@@ -24,7 +24,7 @@ public class UserInfo extends BaseEnity {
     public static class Data{
         private String pname;
         private String sex;
-        private String pemail;
+        private String jemail;
         private String username;
         private String face;
 
@@ -44,12 +44,12 @@ public class UserInfo extends BaseEnity {
             this.sex = sex;
         }
 
-        public String getPemail() {
-            return pemail;
+        public String getJemail() {
+            return jemail;
         }
 
-        public void setPemail(String pemail) {
-            this.pemail = pemail;
+        public void setJemail(String jemail) {
+            this.jemail = jemail;
         }
 
         public String getUsername() {

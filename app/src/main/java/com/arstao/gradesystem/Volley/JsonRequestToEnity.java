@@ -1,5 +1,7 @@
 package com.arstao.gradesystem.Volley;
 
+import android.util.Log;
+
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Response;
@@ -36,6 +38,7 @@ private Class<T> mClazz;
     protected Response<T> parseNetworkResponse(NetworkResponse response) {
         try {
             String je = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
+            Log.i("TAG",je);
             T result =null;
             int i = je.indexOf("{");
             String substring = je.substring(i);
